@@ -16,6 +16,11 @@ GraphicResourceManager::GraphicResourceManager()
 
 GraphicResourceManager::~GraphicResourceManager()
 {
+	RemoveAllShader();
+	RemoveAllTexture();
+	RemoveAllMeshs();
+	RemoveAllSkeletons();
+	RemoveAllEffects();
 }
 
 void GraphicResourceManager::Initialize()
@@ -35,6 +40,12 @@ void GraphicResourceManager::Finalize()
 	mInstance->RemoveAllMeshs();
 	mInstance->RemoveAllSkeletons();
 	mInstance->RemoveAllEffects();
+
+	if (mInstance)
+	{
+		delete mInstance;
+		mInstance = nullptr;
+	}
 }
 
 Shader* GraphicResourceManager::FindUseShader(ShaderTag findShaderTag)
