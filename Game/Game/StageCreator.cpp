@@ -36,8 +36,8 @@ void StageCreator::CreateStage()
 
 	new EnemyObject(Vector3(2941, -949, 112),
 		             0.5f,
-		             "Assets/Dragon/DragonTheUsurperSK.gpmesh",
-		             "Assets/Dragon/DragonTheUsurperSK.gpskel");
+		             "Assets/Dragon/DRAGON.gpmesh",
+		             "Assets/Dragon/DRAGON.gpskel");
 
 	// ÉJÉÅÉâÇÃê∂ê¨
 	mCamera= new ThirdPersonCameraObject(mPlayer);
