@@ -35,28 +35,27 @@ public:
 	/// </summary>
 	static void ShowResource();
 
-// ゲッター //
 
 	/// <summary>
 	/// テクスチャの取得
 	/// </summary>
 	/// <param name="fileName">テクスチャのファイルパス</param>
 	/// <returns>テクスチャクラスのポインタ</returns>
-	static Texture* GetTexture(const std::string& filePass);
+	static Texture* LoadTexture(const std::string& filePass);
 
 	/// <summary>
 	/// メッシュの取得
 	/// </summary>
 	/// <param name="filePass">メッシュのファイルパス</param>
 	/// <returns>メッシュクラスのポインタ</returns>
-	static Mesh* GetMesh(const std::string& filePass);
+	static Mesh* LoadMesh(const std::string& filePass);
 
 	/// <summary>
 	/// スケルトンの取得
 	/// </summary>
 	/// <param name="filePass">スケルトンファイルパス</param>
 	/// <returns>スケルトンクラスのポインタ</returns>
-	const static Skeleton* GetSkeleton(const char* filePass);
+	const static Skeleton* LoadSkeleton(const char* filePass);
 
 	/// <summary>
 	/// アニメーションの取得
@@ -64,8 +63,9 @@ public:
 	/// <param name="filePass">アニメーションのファイルパス</param>
 	/// <param name="isAnimationLoop">アニメーションをループさせるかどうか</param>
 	/// <returns>アニメーションクラスのポインタ</returns>
-	const static Animation* GetAnimation(const char* filePass, bool isAnimationLoop);
+	const static Animation* LoadAnimation(const char* filePass, bool isAnimationLoop);
 
+// ゲッター //
 	static EffekseerEffect* GetEffect(const char16_t* filePass);
 
 private:
@@ -101,14 +101,29 @@ private:
 	/// </summary>
 	void RemoveAllShader();
 
+	/// <summary>
+	/// すべてのテクスチャの削除
+	/// </summary>
 	void RemoveAllTexture();
 
+	/// <summary>
+	/// すべてのメッシュの削除
+	/// </summary>
 	void RemoveAllMeshs();
 
+	/// <summary>
+	/// すべてのスケルトンの削除
+	/// </summary>
 	void RemoveAllSkeletons();
 
+	/// <summary>
+	/// すべてのアニメーションの削除
+	/// </summary>
 	void RemoveAllAnims();
 
+	/// <summary>
+	/// すべてのエフェクトの削除
+	/// </summary>
 	void RemoveAllEffects();
 
 	// マネージャの実体（アプリ内に唯一存在)

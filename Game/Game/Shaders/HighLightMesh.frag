@@ -18,7 +18,7 @@ void main()
 
 	// ピクセルの輝度を求める
 	float brightness = dot(result,vec3(0.2126, 0.7152, 0.0722));
-	if(brightness > 0.8)
+	if(brightness > 0.4)
 	{
 		BrightBuffer = vec4(result, 0.0f);
 	}

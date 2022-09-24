@@ -154,6 +154,15 @@
     <Filter Include="ソース ファイル\Renderer\GraphicResourceManager">
       <UniqueIdentifier>{d03c1ead-74e7-43a9-a0a0-fff2b9685abb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\HUD">
+      <UniqueIdentifier>{ded1d911-6719-4bba-9c54-96bcfeb90229}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Renderer\GBuffer">
+      <UniqueIdentifier>{0a55b9ee-ea60-4a75-9d4f-46a86412c2d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Renderer\PointLight">
+      <UniqueIdentifier>{621fdbbc-c461-44b4-9e6d-6c5e7ae72d79}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -323,6 +332,18 @@
     </ClCompile>
     <ClCompile Include="GraphicResourceManager.cpp">
       <Filter>ソース ファイル\Renderer\GraphicResourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>ソース ファイル\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStateRun.cpp">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State</Filter>
+    </ClCompile>
+    <ClCompile Include="GBuffer.cpp">
+      <Filter>ソース ファイル\Renderer\GBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="PointLight.cpp">
+      <Filter>ソース ファイル\Renderer\PointLight</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -506,6 +527,18 @@
     <ClInclude Include="GraphicResourceManager.h">
       <Filter>ソース ファイル\Renderer\GraphicResourceManager</Filter>
     </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>ソース ファイル\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStateRun.h">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State</Filter>
+    </ClInclude>
+    <ClInclude Include="GBuffer.h">
+      <Filter>ソース ファイル\Renderer\GBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="PointLight.h">
+      <Filter>ソース ファイル\Renderer\PointLight</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\BasicMesh.frag">
@@ -599,6 +632,42 @@
       <Filter>Shader</Filter>
     </None>
     <None Include="Shaders\tilemap.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\DirectionalLight.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\DirectionalLight.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\gBuffer.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\gBuffer.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\gBufferLightingPass.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\gBufferLightingPass.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\HighLight.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\LightingSphere.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\LightingSphere.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\PointLight.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\PointLight.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\SkinnedG-Buffer.vert">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>

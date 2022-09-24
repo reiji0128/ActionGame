@@ -68,6 +68,12 @@ public:
 	const Animation* GetAnim(PlayerState state) const { return mAnimations[static_cast<unsigned int>(state)]; }
 
 private:
+	// 体力
+	int mHP;
+
+	// 最大体力
+	const int mMaxHP = 100;
+
 	// 移動スピード
 	Vector3 mVelocity;
 

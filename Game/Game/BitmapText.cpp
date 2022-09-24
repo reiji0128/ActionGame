@@ -26,7 +26,7 @@ BitmapText::~BitmapText()
 
 void BitmapText::SetFontImage(int xNum, int yNum, const std::string& fontimgfilename)
 {
-    mTexture = GraphicResourceManager::GetTexture(fontimgfilename);
+    mTexture = GraphicResourceManager::LoadTexture(fontimgfilename);
 
     if (!mTexture)
     {

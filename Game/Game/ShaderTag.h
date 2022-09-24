@@ -17,6 +17,11 @@ enum class ShaderTag
 	NORMAL_MAP,		     // 法線マップ
 	SCREEN_BUFFER,       // スクリーンバッファ
 	SKYBOX,              // スカイボックス
+	G_BUFFER,            // G-Buffer
+	SKINNED_G_BUFFER,    // スキン用G-Buffer
+	POINT_LIGHT,         // ポイントライト
+	DIRECTIONAL_LIGHT,   // ディレクショナルライト
+	HIGH_LIGHT,          // ハイライト
 
 	NONE,                // 適用するシェーダーなし
 };

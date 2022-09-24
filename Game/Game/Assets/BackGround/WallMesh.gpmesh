@@ -3,8 +3,11 @@
 	"vertexformat":"PosNormTex",
 	"shader":"BasicMesh",
 	"textures":[
-		"Assets/BackGround/T_StoneWall_A.png","Assets/BackGround/T_StoneWall_N.png"
-	],
+		"Assets/BackGround/T_StoneWall_A.png",
+                "Assets/BackGround/T_StoneWall_N.png"],
+	"diffuse":["Assets/BackGround/T_StoneWall_A.png"],
+	"specular":["none"],
+	"normal":["Assets/BackGround/T_StoneWall_N.png"],
 	"specularPower":100.0,
 	"vertices":[
 		[-1647.692871,1934.707275,600.000000,0.000000,1.000000,0.000000,1.000000,0.000000],

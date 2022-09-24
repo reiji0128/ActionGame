@@ -8,7 +8,7 @@ GameOverScene::GameOverScene()
 {
 	printf("---------------GameOverScene---------------\n");
 	mGameOverTex = new Texture;
-    mGameOverTex = GraphicResourceManager::GetTexture("Assets/Scene/GameOver.png");
+    mGameOverTex = GraphicResourceManager::LoadTexture("Assets/Scene/GameOver.png");
 }
 
 GameOverScene::~GameOverScene()

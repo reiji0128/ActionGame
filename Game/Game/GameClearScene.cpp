@@ -15,7 +15,7 @@ GameClearScene::GameClearScene()
     mFont->ReMapText(" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_\tabcdefghijklmnopqrstuvwxyz{|}~\\");
 
     mGameClearTex = new Texture;
-    mGameClearTex = GraphicResourceManager::GetTexture("Assets/Scene/GameClear.png");
+    mGameClearTex = GraphicResourceManager::LoadTexture("Assets/Scene/GameClear.png");
 }
 
 GameClearScene::~GameClearScene()

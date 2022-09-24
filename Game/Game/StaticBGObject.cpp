@@ -15,7 +15,7 @@ StaticBGObject::StaticBGObject(const Vector3& position, const char* gpmeshFileNa
 	,mShaderTag(ShaderTag::SHADOW_MAP)
 {
 	mPosition = position;
-	Mesh* mesh = GraphicResourceManager::GetMesh(gpmeshFileName);
+	Mesh* mesh = GraphicResourceManager::LoadMesh(gpmeshFileName);
 	MeshComponent* mc = new MeshComponent(this,mShaderTag);
 	mc->SetMesh(mesh);
 }

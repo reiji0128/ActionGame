@@ -5,6 +5,8 @@
 	"textures":[
 		"Assets/Sword/SK_Sword.png"
 	],
+	"specular":["none"],
+	"normal":["none"],
 	"specularPower":100.0,
 	"vertices":[
 		[-2.131248,-0.000249,-16.797630,-0.945098,-0.003922,-0.341176,0,0,0,0,255,0,0,0,0.634897,0.809182],

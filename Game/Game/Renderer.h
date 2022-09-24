@@ -26,6 +26,9 @@ typedef struct DirectionalLight
 
 // 前方宣言
 class SpriteComponent;
+class DepthMap;
+class HDR;
+class GBuffer;
 
 class Renderer
 {
@@ -73,7 +76,7 @@ public:
 	/// <summary>
 	/// アンビエントライトのセット
 	/// </summary>
-	/// <param name="ambientColor">アンビエントの色</param>
+	/// <param name="ambientColor">アンビエント色</param>
 	void SetAmbientLight(const Vector3& ambientColor){ mAmbientLight = ambientColor; }
 
 
@@ -185,6 +188,9 @@ private:
 	/// </summary>
 	void CreateCubeMapVerts();
 
+	// ライト用のフレームバッファオブジェクト作成
+	void CreateLightFBO();
+
 	/// <summary>
 	/// 画面全体を覆う頂点定義
 	/// </summary>
@@ -192,9 +198,37 @@ private:
 	void ScreenVAOSetting(unsigned int& vao);
 
 	/// <summary>
+	/// スクリーンいっぱい四角形の描画
+	/// </summary>
+	void RenderQuad();
+
+	/// <summary>
 	/// 深度バッファへの焼きこみ処理
 	/// </summary>
-	void BakeDepthBuffer(Matrix4 lightSpaceMatrix);
+	void BakeDepthBuffer();
+
+	/// <summary>
+	/// G-BUfferに描画
+	/// </summary>
+	void DrawToGBuffer();
+
+	/// <summary>
+	/// ポイントライトパス
+	/// </summary>
+	void PointLightPass();
+
+	/// <summary>
+	/// ディレクショナルライトパス
+	/// </summary>
+	void DirectionalLightPass();
+
+	/// <summary>
+	/// ライトの減衰半径の計算
+	/// </summary>
+	/// <param name="constant">定数</param>
+	/// <param name="linear">線形</param>
+	/// <param name="quadratic">2乗項</param>
+	void CalcAttenuationLightRadius(const float constant, const float linear, const float quadratic);
 
 	// スクリーンの幅
 	int mScreenWidth;
@@ -212,10 +246,13 @@ private:
 // レンダラー関連 //
 	
 	//デプスレンダラー
-	class DepthMap* mDepthMapRenderer;
+	DepthMap* mDepthMapRenderer;
 
 	// HDRレンダラー
-	class HDR* mHDRRenderer;
+	HDR* mHDRRenderer;
+
+	// G-Bufferレンダラー
+	GBuffer* mGBufferRenderer;
 
 // 基本行列関連 //
 
@@ -225,10 +262,17 @@ private:
 	// プロジェクション行列
 	Matrix4 mProjection;
 
+	// ライト空間行列
+	Matrix4 mLightSpaceMat;
+
 // 頂点配列 //
 	class VertexArray* mSpriteVerts;
 	class VertexArray* mHealthVerts;
 	class VertexArray* mCubeMapVerts;
+
+	// フレームバッファID
+	unsigned int mLightFBO;
+	unsigned int mLightHDRTex;
 
 // ライティング関連 //
 	
@@ -237,6 +281,12 @@ private:
 
 	// ディレクショナルライト
 	DirectionalLight mDirectionalLight;
+
+	// ライトの減衰半径
+	std::vector<float> mLightRadius;
+
+	std::vector<Vector3> mLightPos;
+	std::vector<Vector3> mLightColor;
 
 // レンダリングベース情報関連 //
 

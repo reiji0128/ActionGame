@@ -131,29 +131,72 @@ bool Mesh::Load(const std::string& fileName)
 		return false;
 	}
 
-	// スペキュラー強度
-	mSpecPower = static_cast<float>(doc["specularPower"].GetDouble());
-
 	// テクスチャ読み込み
 	for (rapidjson::SizeType i = 0; i < textures.Size(); i++)
 	{
 		std::string texName = textures[i].GetString();
-		Texture* t = GraphicResourceManager::GetTexture(texName);
+		Texture* t = GraphicResourceManager::LoadTexture(texName);
 
-		// テクスチャが読み込まれていればコンテナに格納
-		// このテクスチャが読み込まれてなけ得れば再度読み込む
+		// テクスチャが読み込めていたらコンテナに格納
+		// 読み込めていなければ再度読み込む
 		if (t == nullptr)
 		{
 			// テクスチャ読み込みのトライ
-			t = GraphicResourceManager::GetTexture(texName);
+			t = GraphicResourceManager::LoadTexture(texName);
 			if (t == nullptr)
 			{
 				// nullptrのままであればデフォルトテクスチャをセット
-				t = GraphicResourceManager::GetTexture("Assets/Default.png");
+				t = GraphicResourceManager::LoadTexture("Assets/Default.png");
 			}
 		}
 		mTextures.emplace_back(t);
 	}
+
+
+	// スペキュラーマップをjsonから読み込む //
+	const rapidjson::Value& specularMap = doc["specular"];
+	if (specularMap.IsArray() || specularMap.Size() < 1)
+	{
+		// テクスチャ読み込み
+		std::string texName = specularMap[0].GetString();
+		Texture* t = GraphicResourceManager::LoadTexture(texName);
+
+		// テクスチャが読み込めていたらコンテナに格納
+		// 読み込めていなければ再度読み込む
+		if (t == nullptr)
+		{
+			// テクスチャ読み込みのトライ
+			t = GraphicResourceManager::LoadTexture(texName);
+		}
+
+		mTextureMap[TextureTag::SPECULAR_MAP] = t;
+	}
+
+	//	法線マップマップをjsonから読み込む //
+	const rapidjson::Value& normalMap = doc["normal"];
+	if (!normalMap.IsArray() || normalMap.Size() < 1)
+	{
+		// テクスチャ読み込み
+		std::string texName = normalMap[0].GetString();
+		Texture* t = GraphicResourceManager::LoadTexture(texName);
+
+		// テクスチャが読み込めていたらコンテナに格納
+		// 読み込めていなければ再度読み込む
+		if (t == nullptr)
+		{
+			// テクスチャ読み込みのトライ
+			t = GraphicResourceManager::LoadTexture(texName);
+		}
+		else
+		{
+			t = nullptr;
+		}
+
+		mTextureMap[TextureTag::NORMAL_MAP] = t;
+	}
+
+	// スペキュラー強度
+	mSpecPower = static_cast<float>(doc["specularPower"].GetDouble());
 
 	//頂点読み込み
 	const rapidjson::Value& vertsJson = doc["vertices"];
@@ -223,7 +266,7 @@ bool Mesh::Load(const std::string& fileName)
 				vertices.emplace_back(v);
 			}
 
-			// Add tex coords　テクスチャ座標
+			// テクスチャ座標
 			for (rapidjson::SizeType j = 14; j < vert.Size(); j++)
 			{
 				v.f = static_cast<float>(vert[j].GetDouble());

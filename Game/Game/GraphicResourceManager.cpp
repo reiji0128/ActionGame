@@ -92,7 +92,7 @@ void GraphicResourceManager::ShowResource()
 	}
 }
 
-Texture* GraphicResourceManager::GetTexture(const std::string& filePass)
+Texture* GraphicResourceManager::LoadTexture(const std::string& filePass)
 {
 	Texture* tex = nullptr;
 	auto iter = mInstance->mTextures.find(filePass);
@@ -122,7 +122,7 @@ Texture* GraphicResourceManager::GetTexture(const std::string& filePass)
 	return tex;
 }
 
-Mesh* GraphicResourceManager::GetMesh(const std::string& filePass)
+Mesh* GraphicResourceManager::LoadMesh(const std::string& filePass)
 {
 	Mesh* mesh = nullptr;
 	auto iter = mInstance->mMeshs.find(filePass);
@@ -152,7 +152,7 @@ Mesh* GraphicResourceManager::GetMesh(const std::string& filePass)
 	return mesh;
 }
 
-const Skeleton* GraphicResourceManager::GetSkeleton(const char* filePass)
+const Skeleton* GraphicResourceManager::LoadSkeleton(const char* filePass)
 {
 	Skeleton* sk = nullptr;
 	std::string file(filePass);
@@ -180,7 +180,7 @@ const Skeleton* GraphicResourceManager::GetSkeleton(const char* filePass)
 	}
 }
 
-const Animation* GraphicResourceManager::GetAnimation(const char* filePass, bool isAnimationLoop)
+const Animation* GraphicResourceManager::LoadAnimation(const char* filePass, bool isAnimationLoop)
 {
 	Animation* anim = nullptr;
 	auto iter = mInstance->mAnims.find(filePass);
@@ -361,6 +361,56 @@ bool GraphicResourceManager::LoadShaders()
 		return false;
 	}
 	AddShader(shader, ShaderTag::SKYBOX);
+
+	
+	// G-Bufferシェーダーの読み込み
+	shader = new Shader();
+	if (!shader->Load("Shaders/gBuffer.vert", "Shaders/gBuffer.frag"))
+	{
+		printf("G-Bufferシェーダーの読み込み失敗\n");
+		return false;
+	}
+	AddShader(shader, ShaderTag::G_BUFFER);
+
+
+	//スキン用 G-Bufferシェーダーの読み込み
+	shader = new Shader();
+	if (!shader->Load("Shaders/SkinnedG-Buffer.vert", "Shaders/gBuffer.frag"))
+	{
+		printf("スキン用G-Bufferシェーダーの読み込み失敗\n");
+		return false;
+	}
+	AddShader(shader, ShaderTag::SKINNED_G_BUFFER);
+	
+
+	// ポイントライトシェーダーの読み込み
+	shader = new Shader();
+	if (!shader->Load("Shaders/PointLight.vert", "Shaders/PointLight.frag"))
+	{
+		printf("ポイントライトシェーダーの読み込み失敗\n");
+		return false;
+	}
+	AddShader(shader, ShaderTag::POINT_LIGHT);
+
+
+	// ディレクショナルライトシェーダーの読み込み
+	shader = new Shader();
+	if (!shader->Load("Shaders/DirectionalLight.vert", "Shaders/DirectionalLight.frag"))
+	{
+		printf("ディレクショナルライトシェーダーの読み込み失敗\n");
+		return false;
+	}
+	AddShader(shader, ShaderTag::DIRECTIONAL_LIGHT);
+
+
+	// ハイライトシェーダーの読み込み
+	shader = new Shader();
+	if (!shader->Load("Shaders/ScreenBuffer.vert", "Shaders/HighLight.frag"))
+	{
+		printf("ハイライトシェーダーの読み込み失敗\n");
+		return false;
+	}
+	AddShader(shader, ShaderTag::HIGH_LIGHT);
 
 	return true;
 }

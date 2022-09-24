@@ -21,7 +21,7 @@ SwordObject::SwordObject(const Vector3& offsetPos,
 	mSkelComp = skelComp;
 
 	//メッシュのセット
-	Mesh* mesh = GraphicResourceManager::GetMesh(gpmeshFileName);
+	Mesh* mesh = GraphicResourceManager::LoadMesh(gpmeshFileName);
 	mAttachComp = new AttachMeshComponent(this, mSkelComp, mAttachBoneName, mShaderTag);
 	mAttachComp->SetMesh(mesh);
 	mAttachComp->SetOffsetPosition(offsetPos);

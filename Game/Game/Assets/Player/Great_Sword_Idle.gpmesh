@@ -2,9 +2,10 @@
 	"version":1,
 	"vertexformat":"PosNormSkinTex",
 	"shader":"Skinned",
-	"textures":[
-		"Assets/Player/Great_Sword_Idle.png"
-	],
+	"textures":["Assets/Player/Great_Sword_Idle.png"],
+        "diffuse":["Assets/Player/Great_Sword_Idle.png"],
+	"specular":["none"],
+	"normal":["none"],
 	"specularPower":100.0,
 	"vertices":[
 		[7.858610,-8.169814,10.007751,-0.303170,-0.949944,-0.075454,60,59,4,4,153,102,0,0,0.510299,0.356091],

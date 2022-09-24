@@ -33,18 +33,20 @@ PlayerObject::PlayerObject(const Vector3& pos, const float& scale, const char* g
 
 	SetDirection(Vector3(1, 0, 0));
 
+	mHP = mMaxHP;
+
 	// メッシュの読み込み・セット
-	Mesh* mesh = GraphicResourceManager::GetMesh(gpmeshFileName);
+	Mesh* mesh = GraphicResourceManager::LoadMesh(gpmeshFileName);
 	mSkeltalMeshComp = new SkeletalMeshComponent(this,mShaderTag);
 	mSkeltalMeshComp->SetMesh(mesh);
 
 	// スケルトンの読み込み
-	mSkeltalMeshComp->SetSkeleton(GraphicResourceManager::GetSkeleton(gpskelFileName));
+	mSkeltalMeshComp->SetSkeleton(GraphicResourceManager::LoadSkeleton(gpskelFileName));
 	// アニメーションの読み込み
 	mAnimations.resize(static_cast<unsigned int>(PlayerState::STATE_NUM));
-	mAnimations[static_cast<unsigned int>(PlayerState::STATE_IDLE)]         = GraphicResourceManager::GetAnimation("Assets/Player/Great_Sword_Idle_Anim.gpanim"  , true);
-	mAnimations[static_cast<unsigned int>(PlayerState::STATE_RUN)]          = GraphicResourceManager::GetAnimation("Assets/Player/A_SW_Run.gpanim"               , true);
-	mAnimations[static_cast<unsigned int>(PlayerState::STATE_FIRST_ATTACK)] = GraphicResourceManager::GetAnimation("Assets/Player/Great_Sword_FirstSlash.gpanim" , true);
+	mAnimations[static_cast<unsigned int>(PlayerState::STATE_IDLE)]         = GraphicResourceManager::LoadAnimation("Assets/Player/Great_Sword_Idle_Anim.gpanim"  , true);
+	mAnimations[static_cast<unsigned int>(PlayerState::STATE_RUN)]          = GraphicResourceManager::LoadAnimation("Assets/Player/A_SW_Run.gpanim"               , true);
+	mAnimations[static_cast<unsigned int>(PlayerState::STATE_FIRST_ATTACK)] = GraphicResourceManager::LoadAnimation("Assets/Player/Great_Sword_FirstSlash.gpanim" , true);
 	
 	// アイドル状態のアニメーションをセット
 	mSkeltalMeshComp->PlayAnimation(mAnimations[static_cast<unsigned int>(PlayerState::STATE_IDLE)]);

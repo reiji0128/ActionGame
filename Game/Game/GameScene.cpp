@@ -75,7 +75,7 @@ SceneBase* GameScene::Update()
 
 void GameScene::Draw()
 {
-	glClearColor(0.2f, 0.5f, 0.9f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	// ‰æ–ÊƒNƒŠƒA
 	GAMEINSTANCE.GetRenderer()->WindowClear();
 

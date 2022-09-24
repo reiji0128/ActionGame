@@ -41,6 +41,7 @@ void SkeletalMeshComponent::Draw(Shader* shader)
 		{
 			t->SetActive();
 		}
+
 		// メッシュの頂点配列をアクティブにセット
 		VertexArray* va = mMesh->GetVertexArray();
 		va->SetActive();

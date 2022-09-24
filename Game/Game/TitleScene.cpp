@@ -21,7 +21,7 @@ TitleScene::TitleScene()
     mFont->ReMapText(" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_\tabcdefghijklmnopqrstuvwxyz{|}~\\");
 
     mTitle = new Texture;
-    mTitle = GraphicResourceManager::GetTexture("Assets/Scene/Title.png");
+    mTitle = GraphicResourceManager::LoadTexture("Assets/Scene/Title.png");
 }
 
 /// <summary>

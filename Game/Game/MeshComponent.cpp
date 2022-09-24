@@ -57,6 +57,7 @@ void MeshComponent::Draw(Shader* shader)
 			t->SetActive();
 		}
 
+
 		// 法線マップを使うのであればテクスチャをアクティブに
 		if (mMesh->GetUseNormalMapFlag())
 		{
@@ -65,6 +66,44 @@ void MeshComponent::Draw(Shader* shader)
 			{
 				n->SetActiveNormalMap();
 			}
+		}
+
+		// 頂点配列をアクティブにセット
+		VertexArray* va = mMesh->GetVertexArray();
+		va->SetActive();
+
+		// 描画
+		glDrawElements(GL_TRIANGLES, va->GetNumIndices(), GL_UNSIGNED_INT, nullptr);
+	}
+}
+
+void MeshComponent::Draw(Shader* shader, bool useTexture)
+{
+	if (mMesh)
+	{
+		// ワールド変換をセット
+		shader->SetMatrixUniform("uWorldTransform", mOwner->GetWorldTransform());
+		// スペキュラ強度セット
+		shader->SetFloatUniform("uSpecPower", 100);
+
+		if (useTexture)
+		{
+			// アクティブテクスチャセット
+			Texture* t = mMesh->GetTexture(mTextureIndex);
+			if (t)
+			{
+				t->SetActive();
+			}
+
+			//// 法線マップを使うのであればテクスチャをアクティブに
+			//if (mMesh->GetUseNormalMap())
+			//{
+			//	Texture* n = mMesh->GetTexture(mNormalMapIndex);
+			//	if (n)
+			//	{
+			//		n->SetActiveNormalMap();
+			//	}
+			//}
 		}
 
 		// 頂点配列をアクティブにセット

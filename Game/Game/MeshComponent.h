@@ -31,6 +31,8 @@ public:
 	/// <param name="owner">Shaderのポインタ</param>
 	virtual void Draw(Shader* shader);
 
+	virtual void Draw(Shader* shader, bool useTexture);
+
 // セッター //
 	/// <summary>
 	/// メッシュのセット

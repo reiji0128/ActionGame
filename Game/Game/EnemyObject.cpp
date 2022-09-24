@@ -30,16 +30,16 @@ EnemyObject::EnemyObject(const Vector3& pos,
 	SetScale(scale);
 
 	// メッシュの読み込み・セット
-	Mesh* mesh = GraphicResourceManager::GetMesh(gpmeshFileName);
+	Mesh* mesh = GraphicResourceManager::LoadMesh(gpmeshFileName);
 	mSkeltalMeshComp = new SkeletalMeshComponent(this, mUseShaderTag);
 	mSkeltalMeshComp->SetMesh(mesh);
 
 	// スケルトンの読み込み
-	mSkeltalMeshComp->SetSkeleton(GraphicResourceManager::GetSkeleton(gpskelFileName));
+	mSkeltalMeshComp->SetSkeleton(GraphicResourceManager::LoadSkeleton(gpskelFileName));
 
 	// アニメーションの読み込み
 	mAnimations.resize(static_cast<unsigned int>(EnemyState::STATE_NUM));
-	mAnimations[static_cast<unsigned int>(EnemyState::STATE_IDLE)] = GraphicResourceManager::GetAnimation("Assets/Dragon/DRAGON_idle.gpanim", true);
+	mAnimations[static_cast<unsigned int>(EnemyState::STATE_IDLE)] = GraphicResourceManager::LoadAnimation("Assets/Dragon/DRAGON_idle.gpanim", true);
 
 
 	// アイドル状態のアニメーションをセット

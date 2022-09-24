@@ -4,16 +4,18 @@
 #include <unordered_map>
 #include "Collision.h"
 
-enum class Textures
+class Texture;
+
+enum class TextureTag
 {
 	// ディフューズ
-	DIFFUSE,
+	DIFFUSE_MAP,
 	
 	// スペキュラー
-	SPECULAR,
+	SPECULAR_MAP,
 
 	// 法線
-	NORMAL
+	NORMAL_MAP
 };
 
 class Mesh
@@ -36,7 +38,7 @@ public:
 	/// <param name="uv2">三角形面の頂点に対応するUV座標</param>
 	/// <param name="uv3">三角形面の頂点に対応するUV座標</param>
 	void CalcTangent(Vector3& destTangent, const Vector3& pos1, const Vector3& pos2, const Vector3& pos3,
-		const Vector2& uv1, const Vector2& uv2, const Vector2& uv3);
+		             const Vector2& uv1, const Vector2& uv2, const Vector2& uv3);
 
 // セッター //
 	void SetUseNormalMap(bool useNormalMap) { mUseNormalMap = useNormalMap; }
@@ -44,8 +46,10 @@ public:
 // ゲッター //
 	//このメッシュに関連付けられている頂点配列を取得
 	class VertexArray* GetVertexArray() { return mVertexArray; }
+
 	//指定されたインデックスからテクスチャを取得
-	class Texture* GetTexture(size_t intdex);
+	Texture* GetTexture(size_t index);
+
 	//シェーダーの名前を取得
 	const std::string& GetShaderName() const { return mShaderName; }
 
@@ -62,6 +66,8 @@ private:
 	//このメッシュに関連付けられているテクスチャ
 	std::vector<class Texture*> mTextures;
 
+	std::unordered_map<TextureTag, Texture*> mTextureMap;
+
 	//このメッシュに関連付けられた頂点配列
 	class VertexArray* mVertexArray;
 
@@ -70,7 +76,7 @@ private:
 
 	//オブジェクト空間での境界球の半径を記録
 	float mRadius;
-
+	
 	//表面の鏡面反射力
 	float mSpecPower;
 

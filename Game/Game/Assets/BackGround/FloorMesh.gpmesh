@@ -4,6 +4,9 @@
 	"shader":"BasicMesh",
 	"textures":["Assets/BackGround/T_BrickFloor_Clean_A.png",
                     "Assets/BackGround/T_BrickFloor_Clean_N.png"],
+	"diffuse":["Assets/BackGround/T_BrickFloor_Clean_A.png"],
+	"specular":["none"],
+	"normal":["Assets/BackGround/T_BrickFloor_Clean_N.png"],
 	"specularPower":100.0,
 	"vertices":[
 		[-1806.976685,891.279053,-0.000000,0.000000,0.000000,1.000000,0.000000,1.000000],

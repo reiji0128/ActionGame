@@ -6,6 +6,7 @@
 #include "StaticBGObject.h"
 #include "BGCollisionSetter.h"
 #include "SkyBoxObject.h"
+#include "PointLight.h"
 
 StageCreator::StageCreator()
 {
@@ -42,6 +43,8 @@ void StageCreator::CreateStage()
 	// カメラの生成
 	mCamera= new ThirdPersonCameraObject(mPlayer);
 	mCamera->SetCameraLength(500.0f);
+
+	new PointLight(Vector3(0, 0, 0));
 
 	// バックグラウンドの生成
 	new StaticBGObject(Vector3(1430, -1125, 110), "Assets/BackGround/FloorMesh.gpmesh");
