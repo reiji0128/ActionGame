@@ -12,6 +12,7 @@ enum class Tag : unsigned char
 
 	Player = Begin,
 	Enemy,
+	EnemyAttackHand,
 	BackGround,
 	Camera,
 	Effect,

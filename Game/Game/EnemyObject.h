@@ -12,6 +12,10 @@ class LineCollider;
 enum class EnemyState
 {
 	STATE_IDLE,
+	STATE_PATROL,
+	STATE_RUN,
+	STATE_ATTACK_HAND,
+	STATE_DEATH,
 
 	STATE_NUM
 };
@@ -32,7 +36,12 @@ public:
 
 	const Animation* GetAnim(EnemyState state) const { return mAnimations[static_cast<unsigned int>(state)]; }
 
+	// セッター //
+	void SetVelosity(const Vector3& velosity) { mVelocity = velosity; }
+
 private:
+	int mHitPoint;
+
 	Vector3 mVelocity;
 
 	EnemyState mNowState;

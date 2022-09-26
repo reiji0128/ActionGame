@@ -67,6 +67,8 @@ public:
 	/// <returns>アニメーション</returns>
 	const Animation* GetAnim(PlayerState state) const { return mAnimations[static_cast<unsigned int>(state)]; }
 
+	const int GetHitPoint() const { return mHP; }
+
 private:
 	// 体力
 	int mHP;

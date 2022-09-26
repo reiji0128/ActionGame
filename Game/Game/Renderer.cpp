@@ -234,27 +234,6 @@ void Renderer::Draw()
 	{
 		Shader* useShader = nullptr;
 
-		//if (mSkyBox != nullptr)
-		//{
-		//	Shader* useShader = nullptr;
-
-		//	useShader = GraphicResourceManager::FindUseShader(ShaderTag::SKYBOX);
-		//	useShader->SetActive();
-		//	// ゲームの空間に合わせるためのオフセット行列をセット
-		//	Matrix4 offset = Matrix4::CreateRotationX(Math::ToRadians(90.0f));
-
-		//	// Uniformに逆行列をセット
-		//	Matrix4 InvView = mView;
-		//	InvView.Invert();
-		//	InvView.Transpose();
-		//	useShader->SetMatrixUniform("uOffset", offset);
-		//	useShader->SetMatrixUniform("uProjection", mProjection);
-		//	useShader->SetMatrixUniform("uView", InvView);
-		//	useShader->SetIntUniform("uSkyBox", 0);
-
-		//	mSkyBox->Draw(useShader);
-		//}
-
 		useShader = GraphicResourceManager::FindUseShader(ShaderTag::HIGH_LIGHT);
 		useShader->SetActive();
 

@@ -7,7 +7,7 @@ class SkeletalMeshComponent;
 class EnemyStateBase
 {
 public:
-	EnemyStateBase() {};
+	EnemyStateBase();
 
 	virtual ~EnemyStateBase() {};
 
@@ -16,6 +16,9 @@ public:
 	virtual void Enter(EnemyObject* owner, float deltaTime) {};
 
 protected:
+	// ステートのタイマー
+	float mStateTimer;
+
 	// スケルタルメッシュクラスのポインタ
 	SkeletalMeshComponent* mSkelComp;
  };

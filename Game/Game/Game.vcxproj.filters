@@ -163,6 +163,9 @@
     <Filter Include="ソース ファイル\Renderer\PointLight">
       <UniqueIdentifier>{621fdbbc-c461-44b4-9e6d-6c5e7ae72d79}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\HUD\PlayerHealthBar">
+      <UniqueIdentifier>{94381bd6-bc66-4d2a-aa49-5b5026fabbb1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -344,6 +347,27 @@
     </ClCompile>
     <ClCompile Include="PointLight.cpp">
       <Filter>ソース ファイル\Renderer\PointLight</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStatePatrol.cpp">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStateDeath.cpp">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStateAttack.cpp">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStateAttackHand.cpp">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStaeBase.cpp">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStateThink.cpp">
+      <Filter>ソース ファイル\GameObject\EnemyObject</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerHealthBar.cpp">
+      <Filter>ソース ファイル\HUD\PlayerHealthBar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -538,6 +562,24 @@
     </ClInclude>
     <ClInclude Include="PointLight.h">
       <Filter>ソース ファイル\Renderer\PointLight</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStatePatrol.h">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStateDeath.h">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStateAttack.h">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStateAttackHand.h">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStateThink.h">
+      <Filter>ソース ファイル\GameObject\EnemyObject</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerHealthBar.h">
+      <Filter>ソース ファイル\HUD\PlayerHealthBar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

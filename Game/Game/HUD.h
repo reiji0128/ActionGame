@@ -10,6 +10,8 @@ public:
 
 	~HUD();
 
+	virtual void Draw() = 0;
+
 protected:
 	Vector2 mOffsetPos;
 
