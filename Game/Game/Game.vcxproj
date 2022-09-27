@@ -197,7 +197,7 @@
     <ClCompile Include="MeshComponent.cpp" />
     <ClCompile Include="Music.cpp" />
     <ClCompile Include="PhysicsWorld.cpp" />
-    <ClCompile Include="PlayerHealthBar.cpp" />
+    <ClCompile Include="PlayerHitPointBar.cpp" />
     <ClCompile Include="PlayerObject.cpp" />
     <ClCompile Include="PlayerStateFirstAttack.cpp" />
     <ClCompile Include="PlayerStateIdle.cpp" />
@@ -266,7 +266,7 @@
     <ClInclude Include="MeshComponent.h" />
     <ClInclude Include="Music.h" />
     <ClInclude Include="PhysicsWorld.h" />
-    <ClInclude Include="PlayerHealthBar.h" />
+    <ClInclude Include="PlayerHitPointBar.h" />
     <ClInclude Include="PlayerObject.h" />
     <ClInclude Include="PlayerStateBase.h" />
     <ClInclude Include="PlayerStateFirstAttack.h" />

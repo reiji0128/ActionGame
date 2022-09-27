@@ -366,7 +366,7 @@
     <ClCompile Include="EnemyStateThink.cpp">
       <Filter>ソース ファイル\GameObject\EnemyObject</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerHealthBar.cpp">
+    <ClCompile Include="PlayerHitPointBar.cpp">
       <Filter>ソース ファイル\HUD\PlayerHealthBar</Filter>
     </ClCompile>
   </ItemGroup>
@@ -578,7 +578,7 @@
     <ClInclude Include="EnemyStateThink.h">
       <Filter>ソース ファイル\GameObject\EnemyObject</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerHealthBar.h">
+    <ClInclude Include="PlayerHitPointBar.h">
       <Filter>ソース ファイル\HUD\PlayerHealthBar</Filter>
     </ClInclude>
   </ItemGroup>

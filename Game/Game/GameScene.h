@@ -4,6 +4,10 @@
 #include "Renderer.h"
 
 class StageCreator;
+class BitmapText;
+class Texture;
+class DebugGrid;
+class PlayerHitPointBar;
 
 class GameScene : public SceneBase
 {
@@ -27,9 +31,13 @@ public:
 	/// <summary>
 	/// シーンの描画処理
 	/// </summary>
-	void	   Draw();
+	void Draw();
 
 private:
+
+	/// <summary>
+	/// プロジェクション行列の初期化
+	/// </summary>
 	void InitProjMatrix();
 
 	void LightingSetting();
@@ -38,16 +46,18 @@ private:
 
 	float mHealthScaleX;
 
-	/// ビットマップテキストのポインタ
-	class BitmapText* mFont;
+	// ビットマップテキストのポインタ
+	BitmapText* mFont;
 
-	/// テクスチャクラスのポインタ
-	class Texture* mTex;
+	// テクスチャクラスのポインタ
+	Texture* mTex;
 
-	/// デバッググリッドクラスのポインタ
-	class DebugGrid* mGrid;
+	// デバッググリッドクラスのポインタ
+	DebugGrid* mGrid;
 
 	//class Texture* mUI;
 
 	StageCreator* mStageCreator;
+
+	PlayerHitPointBar* mPlayerHitPointBar;
 };

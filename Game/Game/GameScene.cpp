@@ -10,6 +10,7 @@
 #include "PhysicsWorld.h"
 #include "Texture.h"
 #include "StageCreator.h"
+#include "PlayerHitPointBar.h"
 
 
 GameScene::GameScene()
@@ -30,12 +31,11 @@ GameScene::GameScene()
 	Vector3 color(0, 1, 0);
 	mGrid = new DebugGrid(2000, 20, color);
 
+	mPlayerHitPointBar = new PlayerHitPointBar(Vector2(0,0),Vector2(1,1),1.0);
+
 	InitProjMatrix();
 
 	LightingSetting();
-
-	/*mTex = new Texture;
-	mTex = RENDERER->GetTexture("Assets/Player/Health.png");*/                           
 
 	// ステージクリエーターの生成
 	mStageCreator = new StageCreator();
@@ -51,6 +51,7 @@ GameScene::~GameScene()
 	delete mFont;
 	delete mGrid;
 	delete mStageCreator;
+	delete mPlayerHitPointBar;
 }
 
 SceneBase* GameScene::Update()
@@ -84,16 +85,19 @@ void GameScene::Draw()
 
 	// 2D描画の開始処理
 	RENDERER->SpriteDrawBegin();
-
-	
-
+	{
+		mPlayerHitPointBar->Draw();
+	}
 	// 2D描画の終了処理
 	RENDERER->SpriteDrawEnd();
 
 // エフェクト関連の処理 //
+
 	// エフェクト描画の開始処理
 	RENDERER->GetEffekseerRenderer()->BeginRendering();
-	RENDERER->GetEffekseerManager()->Draw();
+	{
+		RENDERER->GetEffekseerManager()->Draw();
+	}
 	// エフェクト描画の終了処理
 	RENDERER->GetEffekseerRenderer()->EndRendering();
 

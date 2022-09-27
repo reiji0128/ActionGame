@@ -6,9 +6,9 @@ class Texture;
 class HUD
 {
 public:
-	HUD();
+	HUD() {};
 
-	~HUD();
+	~HUD() {};
 
 	virtual void Draw() = 0;
 
@@ -16,6 +16,8 @@ protected:
 	Vector2 mOffsetPos;
 
 	Vector2 mScale;
+
+	float mAlpha;
 
 	Texture* mTexture;
 };
