@@ -9,19 +9,19 @@
 #include "LineCollider.h"
 #include "Animation.h"
 #include "ShaderTag.h"
+#include "HitPointGauge.h"
 
 #include "EnemyStaeBase.h"
 #include "EnemyStateIdle.h"
 #include "EnemyStatePatrol.h"
 #include "EnemyStateRun.h"
 #include "EnemyStateAttackHand.h"
+#include "EnemyStateAttackBite.h"
 #include "EnemyStateDeath.h"
 
-EnemyObject::EnemyObject(const Vector3& pos,
-	const float& scale,
-	const char* gpmeshFileName,
-	const char* gpskelFileName)
+EnemyObject::EnemyObject(const Vector3& pos,const float& scale,const char* gpmeshFileName,const char* gpskelFileName)
 	:GameObject(Tag::Enemy)
+	,mHP(mMaxHP)
 	,mSkeltalMeshComp(nullptr)
 	,mBoxCollider(nullptr)
 	,mLineCollider(nullptr)
@@ -45,11 +45,14 @@ EnemyObject::EnemyObject(const Vector3& pos,
 
 	// アニメーションの読み込み
 	mAnimations.resize(static_cast<unsigned int>(EnemyState::STATE_NUM));
-	mAnimations[static_cast<unsigned int>(EnemyState::STATE_IDLE)]        = GraphicResourceManager::LoadAnimation("Assets/Dragon/DRAGON_idle.gpanim"       , true);
-	mAnimations[static_cast<unsigned int>(EnemyState::STATE_PATROL)]      = GraphicResourceManager::LoadAnimation("Assets/Dragon/ANIM_DRAGON_walk.gpanim"  , true);
-	mAnimations[static_cast<unsigned int>(EnemyState::STATE_RUN)]         = GraphicResourceManager::LoadAnimation("Assets/Dragon/ANIM_DRAGON_walk.gpanim"  , true);
-	mAnimations[static_cast<unsigned int>(EnemyState::STATE_ATTACK_HAND)] = GraphicResourceManager::LoadAnimation("Assets/Dragon/ANIM_MOUNTAIN_DRAGON_AttackHand.gpanim"    , false);
-	mAnimations[static_cast<unsigned int>(EnemyState::STATE_DEATH)]       = GraphicResourceManager::LoadAnimation("Assets/Dragon/ANIM_DRAGON_death.gpanim" , false);
+	mAnimations[static_cast<unsigned int>(EnemyState::STATE_IDLE)]        = GraphicResourceManager::LoadAnimation("Assets/Dragon/DRAGON_idle.gpanim"                     , true);
+	mAnimations[static_cast<unsigned int>(EnemyState::STATE_PATROL)]      = GraphicResourceManager::LoadAnimation("Assets/Dragon/ANIM_DRAGON_walk.gpanim"                , true);
+	mAnimations[static_cast<unsigned int>(EnemyState::STATE_RUN)]         = GraphicResourceManager::LoadAnimation("Assets/Dragon/ANIM_DRAGON_walk.gpanim"                , true);
+	mAnimations[static_cast<unsigned int>(EnemyState::STATE_ATTACK_HAND)] = GraphicResourceManager::LoadAnimation("Assets/Dragon/ANIM_MOUNTAIN_DRAGON_AttackHand.gpanim" , false);
+	mAnimations[static_cast<unsigned int>(EnemyState::STATE_ATTACK_BITE)] = GraphicResourceManager::LoadAnimation("Assets/Dragon/ANIM_DRAGON_bite.gpanim"                , false);
+	mAnimations[static_cast<unsigned int>(EnemyState::STATE_FIRE_BREATH)] = GraphicResourceManager::LoadAnimation("Assets/Dragon/ANIM_DRAGON_spreadFire.gpanim"          , false);
+	mAnimations[static_cast<unsigned int>(EnemyState::STATE_FIRE_BALL)]   = GraphicResourceManager::LoadAnimation("Assets/Dragon/STATE_FIRE_BREATH.gpanim"               , false);
+	mAnimations[static_cast<unsigned int>(EnemyState::STATE_DEATH)]       = GraphicResourceManager::LoadAnimation("Assets/Dragon/ANIM_DRAGON_death.gpanim"               , false);
 
 
 	// アイドル状態のアニメーションをセット
@@ -60,11 +63,12 @@ EnemyObject::EnemyObject(const Vector3& pos,
 	mStatePools.push_back(new EnemyStatePatrol);
 	mStatePools.push_back(new EnemyStateRun);
 	mStatePools.push_back(new EnemyStateAttackHand);
+	mStatePools.push_back(new EnemyStateAttackBite);
 	mStatePools.push_back(new EnemyStateDeath);
 
 	// 当たり判定のセット
 	AABB box = mesh->GetCollisionBox();
-	box.Scaling(0.5f, 0.5f, 0.f);
+	box.Scaling(0.5f, 0.5f, 0.5f);
 	mBoxCollider = new BoxCollider(this);
 	mBoxCollider->SetObjectBox(box);
 
@@ -76,8 +80,6 @@ EnemyObject::EnemyObject(const Vector3& pos,
 
 EnemyObject::~EnemyObject()
 {
-	delete mBoxCollider;
-	delete mLineCollider;
 }
 
 void EnemyObject::UpdateGameObject(float deltaTime)
