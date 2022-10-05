@@ -19,7 +19,15 @@ EnemyState EnemyStateRun::Update(EnemyObject* owner, float deltaTime)
 	//追跡しない距離まで近づいたときに攻撃に移行
 	if (length < nearLength)
 	{
-		return EnemyState::STATE_ATTACK_HAND;
+		int probability = rand() % 100;
+		if (0 <= probability && probability < 25)
+		{
+			return EnemyState::STATE_ATTACK_HAND;
+		}
+		else if (25 <= probability && probability < 50)
+		{
+			return EnemyState::STATE_ATTACK_HAND;
+		}
 	}
 
 	// 追跡可能距離を超えたらステートをパトロールに移行

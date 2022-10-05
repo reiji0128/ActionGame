@@ -3,20 +3,16 @@
 
 class EnemyObject;
 
-class EnemyStateAttackHand : public EnemyStateBase
+class EnemyStateAttackBite : public EnemyStateBase
 {
 public:
-	EnemyStateAttackHand();
+	EnemyStateAttackBite();
 
-	~EnemyStateAttackHand();
+	~EnemyStateAttackBite();
 
 	EnemyState Update(EnemyObject* owner, float deltaTime) override;
 
 	void Enter(EnemyObject* owner, float deltaTime) override;
 
-private:
 	void Attack(EnemyObject* owner, float deltaTime);
-
-	// 攻撃アニメ開始してから攻撃判定が発生するまでの調整時間
-	const float attackOffsetTime = 0.5f;
 };

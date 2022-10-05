@@ -15,29 +15,27 @@ EnemyState EnemyStateAttackHand::Update(EnemyObject* owner, float deltaTime)
 {
 	mStateTimer -= deltaTime;
 
-	// プレイヤーから離れたら追跡モードへ
+	// 敵からプレイヤーに向かうベクトルを算出
 	Vector3 playerPos = GAMEINSTANCE.GetPlayerObjects()->GetPosition();
 	Vector3 enemyToPlayerVec = playerPos - owner->GetPosition();
 
 	float length = enemyToPlayerVec.Length();
 
-	// プレイヤーが離れたら追跡モードへ移行
-	if (length > retrackingRange)
-	{
-		return EnemyState::STATE_RUN;
-	}
 
-	// 再生アニメが完了したら追跡モードへ移行
+	// アニメーションは再生中か
 	if (!mSkelComp->IsPlaying())
 	{
-		return EnemyState::STATE_RUN;
+		// プレイヤーとの距離が追跡距離より短いか
+		if (length < retrackingRange)
+		{
+			return EnemyState::STATE_IDLE;
+		}
+		else
+		{
+			return EnemyState::STATE_RUN;
+		}
 	}
 
-	////プレイヤーの攻撃を受けたか
-	//if (owner->GetIsHitTrig())
-	//{
-	//	return EnemyState::STATE_DEATH;
-	//}
 	return EnemyState::STATE_ATTACK_HAND;
 }
 

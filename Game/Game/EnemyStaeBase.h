@@ -19,6 +19,9 @@ protected:
 	// ステートのタイマー
 	float mStateTimer;
 
+	// 攻撃中から追跡に変わる距離
+	const float retrackingRange = 300.0f;
+
 	// スケルタルメッシュクラスのポインタ
 	SkeletalMeshComponent* mSkelComp;
  };

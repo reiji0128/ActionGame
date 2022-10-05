@@ -1,7 +1,9 @@
 #pragma once
 #include "GameObject.h"
+#include <functional>
 #include "ShaderTag.h"
 
+// 前方宣言
 class ColliderComponent;
 class SkeletalMeshComponent;
 class Animation;
@@ -15,6 +17,9 @@ enum class EnemyState
 	STATE_PATROL,
 	STATE_RUN,
 	STATE_ATTACK_HAND,
+	STATE_ATTACK_BITE,
+	STATE_FIRE_BREATH,
+	STATE_FIRE_BALL,
 	STATE_DEATH,
 
 	STATE_NUM
@@ -36,11 +41,13 @@ public:
 
 	const Animation* GetAnim(EnemyState state) const { return mAnimations[static_cast<unsigned int>(state)]; }
 
-	// セッター //
+// セッター //
 	void SetVelosity(const Vector3& velosity) { mVelocity = velosity; }
 
 private:
-	int mHitPoint;
+	int mHP;
+
+	const int mMaxHP = 100;
 
 	Vector3 mVelocity;
 

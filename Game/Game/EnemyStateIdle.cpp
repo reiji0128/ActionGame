@@ -23,10 +23,19 @@ EnemyState EnemyStateIdle::Update(EnemyObject* owner, float deltaTime)
 
 	float length = enemyToPlayerVec.Length();
 
-	//’ÇÕ‚µ‚È‚¢‹——£‚Ü‚Å‹ß‚Ã‚¢‚½‚Æ‚«‚ÉUŒ‚‚ÉˆÚs
+	//’ÇÕ‚µ‚È‚¢‹——£‚Ü‚Å‹ß‚Ã‚¢‚Ä‚¢‚é‚©
 	if (length < mNearLength)
 	{
-		return EnemyState::STATE_ATTACK_HAND;
+		int probability = rand() % 100;
+
+		if (0 <= probability && probability >50)
+		{
+			return EnemyState::STATE_ATTACK_HAND;
+		}
+		if (50 <= probability && probability > 100)
+		{
+			return EnemyState::STATE_ATTACK_BITE;
+		}
 	}
 
 	if (mStateTimer < 0.0f)
