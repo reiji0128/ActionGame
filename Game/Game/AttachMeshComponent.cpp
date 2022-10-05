@@ -69,7 +69,7 @@ void AttachMeshComponent::Draw(Shader* shader)
 /// <summary>
 /// アタッチさせるものの位置をセット
 /// </summary>
-/// <param name="pos"></param>
+/// <param name="pos">相対座標</param>
 void AttachMeshComponent::SetOffsetPosition(const Vector3& pos)
 {
 	mPositionMat = Matrix4::CreateTranslation(pos);
@@ -78,9 +78,10 @@ void AttachMeshComponent::SetOffsetPosition(const Vector3& pos)
 /// <summary>
 /// アタッチさせるものの角度をセット
 /// </summary>
-/// <param name="rot"></param>
+/// <param name="rot">角度</param>
 void AttachMeshComponent::SetOffsetRotation(const Vector3& rot)
 {
+	// 角度をラジアンに変換
 	Vector3 radian;
 	radian.x = rot.x * (Math::Pi / 180);
 	radian.y = rot.y * (Math::Pi / 180);
