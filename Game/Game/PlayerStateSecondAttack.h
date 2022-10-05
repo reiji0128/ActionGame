@@ -3,19 +3,14 @@
 
 class PlayerObject;
 
-class PlayerStateFirstAttack : public PlayerStateBase
+class PlayerStateSecondAttack : public PlayerStateBase
 {
 public:
+	PlayerStateSecondAttack();
 
-	PlayerStateFirstAttack();
-
-	~PlayerStateFirstAttack();
+	~PlayerStateSecondAttack();
 
 	PlayerState Update(PlayerObject* owner, float deltaTime) override;
 
 	void Enter(PlayerObject* owner, float deltaTime) override;
-
-private:
-	void Attack(PlayerObject* owner, float deltaTime);
-
 };

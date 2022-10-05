@@ -1,6 +1,7 @@
 #pragma once
 #include "PlayerObject.h"
 
+class PlayerObject;
 class SkeletalMeshComponent;
 
 class PlayerStateBase
@@ -27,6 +28,11 @@ public:
 	virtual void Enter(class PlayerObject* owner, float deltaTime) {};
 
 protected:
+	// ステートのタイマー
+	float mStateTimer;
+
+	bool IsFirstAttack;
+
 	// スケルタルメッシュクラスのポインタ
 	SkeletalMeshComponent* mSkelComp;
 };

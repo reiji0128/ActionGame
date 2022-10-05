@@ -13,6 +13,7 @@
 #include "PlayerStateIdle.h"
 #include "PlayerStateRun.h"
 #include "PlayerStateFirstAttack.h"
+#include "PlayerStateSecondAttack.h"
 
 
 PlayerObject::PlayerObject(const Vector3& pos, const float& scale, const char* gpmeshFileName, const char* gpskelFileName)
@@ -44,9 +45,11 @@ PlayerObject::PlayerObject(const Vector3& pos, const float& scale, const char* g
 	mSkeltalMeshComp->SetSkeleton(GraphicResourceManager::LoadSkeleton(gpskelFileName));
 	// アニメーションの読み込み
 	mAnimations.resize(static_cast<unsigned int>(PlayerState::STATE_NUM));
-	mAnimations[static_cast<unsigned int>(PlayerState::STATE_IDLE)]         = GraphicResourceManager::LoadAnimation("Assets/Player/Great_Sword_Idle_Anim.gpanim"  , true);
-	mAnimations[static_cast<unsigned int>(PlayerState::STATE_RUN)]          = GraphicResourceManager::LoadAnimation("Assets/Player/A_SW_Run.gpanim"               , true);
-	mAnimations[static_cast<unsigned int>(PlayerState::STATE_FIRST_ATTACK)] = GraphicResourceManager::LoadAnimation("Assets/Player/Great_Sword_FirstSlash.gpanim" , true);
+	mAnimations[static_cast<unsigned int>(PlayerState::STATE_IDLE)]          = GraphicResourceManager::LoadAnimation("Assets/Player/Great_Sword_Idle_Anim.gpanim"   , true);
+	mAnimations[static_cast<unsigned int>(PlayerState::STATE_RUN)]           = GraphicResourceManager::LoadAnimation("Assets/Player/A_SW_Run.gpanim"                , true);
+	mAnimations[static_cast<unsigned int>(PlayerState::STATE_FIRST_ATTACK)]  = GraphicResourceManager::LoadAnimation("Assets/Player/Great_Sword_FirstSlash.gpanim"  , false);
+	mAnimations[static_cast<unsigned int>(PlayerState::STATE_SECOND_ATTACK)] = GraphicResourceManager::LoadAnimation("Assets/Player/Great_Sword_SecondSlash.gpanim" , false);
+	mAnimations[static_cast<unsigned int>(PlayerState::STATE_DEATH)]         = GraphicResourceManager::LoadAnimation("Assets/Player/Two_Handed_Sword_Death.gpanim"  , false);
 	
 	// アイドル状態のアニメーションをセット
 	mSkeltalMeshComp->PlayAnimation(mAnimations[static_cast<unsigned int>(PlayerState::STATE_IDLE)]);
@@ -55,6 +58,7 @@ PlayerObject::PlayerObject(const Vector3& pos, const float& scale, const char* g
 	mStatePools.push_back(new PlayerStateIdle);
 	mStatePools.push_back(new PlayerStateRun);
 	mStatePools.push_back(new PlayerStateFirstAttack);
+	mStatePools.push_back(new PlayerStateSecondAttack);
 
 	// 当たり判定のセット
 	AABB box = mesh->GetCollisionBox();
@@ -164,4 +168,9 @@ void PlayerObject::OnCollisionEnter(ColliderComponent* ownCollider, ColliderComp
 			ComputeWorldTransform();
 		}
 	}
+}
+
+void PlayerObject::Damage(int damage)
+{
+	mHP = mHP - damage;
 }

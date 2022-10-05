@@ -1,9 +1,12 @@
 ﻿#pragma once
 #include "GameObject.h"
+#include "IPlayerParameterGetter.h"
 #include <vector>
+#include <functional>
 #include "SkeletalMeshComponent.h"
 #include "Math.h"
 #include "ShaderTag.h"
+
 
 // プレイヤーの状態
 enum class PlayerState
@@ -11,13 +14,14 @@ enum class PlayerState
 	STATE_IDLE,     // 待機
 	STATE_RUN,      // 走っている
 	STATE_FIRST_ATTACK,
+	STATE_SECOND_ATTACK,
 	STATE_DAMAGE,    
 	STATE_DEATH,
 
 	STATE_NUM       // 総アニメーション数
 };
 
-class PlayerObject :public GameObject
+class PlayerObject :public GameObject, public IPlayerParameterGetter
 {
 public:
 
@@ -38,6 +42,8 @@ public:
 	/// <param name="otherCollider"></param>
 	void OnCollisionEnter(class ColliderComponent* ownCollider, class ColliderComponent* otherCollider)override;
 
+	void Damage(int damage);
+
 // セッター //
 	/// <summary>
 	/// 接地フラグのセット
@@ -48,6 +54,11 @@ public:
 	bool SetIsGround(bool IsOnGround) { mIsOnGround = IsOnGround; }
 
 // ゲッター //
+
+	int GetHP() const override { return mHP; }
+
+	int GetMaxHP() const override { return mMaxHP; }
+
 	/// <summary>
 	/// 接地フラグのゲッター
 	/// </summary>
@@ -67,7 +78,7 @@ public:
 	/// <returns>アニメーション</returns>
 	const Animation* GetAnim(PlayerState state) const { return mAnimations[static_cast<unsigned int>(state)]; }
 
-	const int GetHitPoint() const { return mHP; }
+
 
 private:
 	// 体力
@@ -91,9 +102,11 @@ private:
 	// プレイヤーの次の状態
 	PlayerState mNextState;
 
-
 	// 接地しているか
 	bool mIsOnGround;
+
+	// ダメージを受けているか
+	bool mIsDamage;
 
 	// アニメーション可変長コンテナ
 	std::vector<const class Animation*> mAnimations;
@@ -112,5 +125,4 @@ private:
 
 	// 適用するシェーダーのタグ
 	ShaderTag mShaderTag;
-
 };
