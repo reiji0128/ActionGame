@@ -113,15 +113,15 @@ bool Skeleton::Load(const std::string& fileName)
 		}
 
 		// バインドポーズの回転成分
-		temp.mLocalBindPose.mRotation.x = static_cast<float>(rot[0].GetDouble());
-		temp.mLocalBindPose.mRotation.y = static_cast<float>(rot[1].GetDouble());
-		temp.mLocalBindPose.mRotation.z = static_cast<float>(rot[2].GetDouble());
-		temp.mLocalBindPose.mRotation.w = static_cast<float>(rot[3].GetDouble());
+		temp.mLocalBindPose.mRotation.x = (rot[0].GetFloat());
+		temp.mLocalBindPose.mRotation.y = (rot[1].GetFloat());
+		temp.mLocalBindPose.mRotation.z = (rot[2].GetFloat());
+		temp.mLocalBindPose.mRotation.w = (rot[3].GetFloat());
 
 		// バインドポーズの移動成分
-		temp.mLocalBindPose.mTranslation.x = static_cast<float>(trans[0].GetDouble());
-		temp.mLocalBindPose.mTranslation.y = static_cast<float>(trans[1].GetDouble());
-		temp.mLocalBindPose.mTranslation.z = static_cast<float>(trans[2].GetDouble());
+		temp.mLocalBindPose.mTranslation.x = (trans[0].GetFloat());
+		temp.mLocalBindPose.mTranslation.y = (trans[1].GetFloat());
+		temp.mLocalBindPose.mTranslation.z = (trans[2].GetFloat());
 
 		// ボーン配列に格納する
 		mBones.emplace_back(temp);
@@ -146,7 +146,7 @@ const int Skeleton::GetBoneIndexFromName(std::string BoneName)const
 	{
 		if (itr->mName == BoneName)
 		{
-			return std::distance(mBones.begin(), itr + 1);
+			return std::distance(mBones.begin(), itr);
 		}
 	}
 
