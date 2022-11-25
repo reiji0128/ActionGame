@@ -35,6 +35,10 @@ void SkeletalMeshComponent::Draw(Shader* shader)
 		shader->SetMatrixUniforms("uMatrixPalette", &mPalette.mEntry[0],MAX_SKELETON_BONES);
 		// スペキュラー強度をセット
 		shader->SetFloatUniform("uSpecPower", 100);
+		// 輝度のセット
+		float luminance = mMesh->GetLuminance();
+		shader->SetFloatUniform("uLuminance", luminance);
+
 		// テクスチャをセット 
 		Texture* t = mMesh->GetTexture(mTextureIndex);
 		if (t)
