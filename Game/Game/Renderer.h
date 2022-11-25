@@ -25,7 +25,13 @@ typedef struct DirectionalLight
 }DirectionalLight;
 
 // 前方宣言
+class Mesh;
+class MeshComponent;
+class SkeletalMeshComponent;
+class PointLightComponent;
 class SpriteComponent;
+class ImageComponent;
+class CubeMapComponent;
 class DepthMap;
 class HDR;
 class GBuffer;
@@ -34,7 +40,7 @@ class Renderer
 {
 public:
 	Renderer();
-	
+
 	~Renderer();
 
 	/// <summary>
@@ -57,15 +63,18 @@ public:
 	/// </summary>
 	void Shutdown();
 
+	/// <summary>
+	/// 描画処理
+	/// </summary>
 	void Draw();
 
-// セッター //
+	// セッター //
 
-	/// <summary>
-	/// ビュー行列のセット
-	/// </summary>
-	/// <param name="view">ビュー行列</param>
-	void SetViewMatrix(const Matrix4& view); 
+		/// <summary>
+		/// ビュー行列のセット
+		/// </summary>
+		/// <param name="view">ビュー行列</param>
+	void SetViewMatrix(const Matrix4& view);
 
 	/// <summary>
 	/// プロジェクション行列のセット
@@ -77,7 +86,7 @@ public:
 	/// アンビエントライトのセット
 	/// </summary>
 	/// <param name="ambientColor">アンビエント色</param>
-	void SetAmbientLight(const Vector3& ambientColor){ mAmbientLight = ambientColor; }
+	void SetAmbientLight(const Vector3& ambientColor) { mAmbientLight = ambientColor; }
 
 
 	/// <summary>
@@ -94,13 +103,13 @@ public:
 	/// </summary>
 	/// <param name="cubeMapComp">キューブマップコンポーネントのポインタ</param>
 	void SetActiveSkyBox(class CubeMapComponent* cubeMapComp) { mSkyBox = cubeMapComp; }
-	
-// ゲッター //
 
-	/// <summary>
-	/// SDLレンダラーの取得
-	/// </summary>
-	/// <returns>SDLレンダラークラスのポインタ</returns>
+	// ゲッター //
+
+		/// <summary>
+		/// SDLレンダラーの取得
+		/// </summary>
+		/// <returns>SDLレンダラークラスのポインタ</returns>
 	SDL_Renderer* GetSDLRenderer() { return mSDLRenderer; }
 
 	/// <summary>
@@ -134,36 +143,106 @@ public:
 	const Matrix4& GetProjectionMatrix() { return mProjection; }
 
 	/// <summary>
+	/// ビュープロジェクション行列の取得
+	/// </summary>
+	/// <returns></returns>
+	const Matrix4& GetSimpleViewProjMatrix() { return mSimpleViewProjMat; }
+
+	/// <summary>
 	/// キューブマップで使用するVertexArrayのポインタの取得
 	/// </summary>
 	/// <returns>キューブマップで使用するVertexArrayのポインタ</returns>
 	VertexArray* GetCubeMapVerts() { return mCubeMapVerts; }
 
+	/// <summary>
+	/// エフェクシアレンダラーの取得
+	/// </summary>
+	/// <returns>エフェクシアレンダラー</returns>
+	Effekseer::RefPtr<EffekseerRendererGL::Renderer> GetEffekseerRenderer() { return mEffekseerRenderer; }
 
-	void AddMeshComponent(class MeshComponent* mesh, ShaderTag shaderTag);    // メッシュコンポーネントの追加
-	void RemoveMeshComponent(class MeshComponent* mesh,ShaderTag shaderTag);  // メッシュコンポーネントの削除
-	void AddSprite(SpriteComponent* Sprite);
+	/// <summary>
+	/// エフェクシアマネージャーの取得
+	/// </summary>
+	/// <returns>エフェクシアマネージャー</returns>
+	Effekseer::RefPtr<Effekseer::Manager> GetEffekseerManager();
+	/// <summary>
+	/// メッシュコンポーネントの追加
+	/// </summary>
+	/// <param name="mesh">追加するメッシュコンポーネント</param>
+	/// <param name="shaderTag">シェーダーのタグ</param>
+	void AddMeshComponent(MeshComponent* mesh, ShaderTag shaderTag);
+
+	/// <summary>
+	/// メッシュコンポーネントの削除
+	/// </summary>
+	/// <param name="mesh">削除するメッシュコンポーネント</param>
+	/// <param name="shaderTag">シェーダーのタグ</param>
+	void RemoveMeshComponent(MeshComponent* mesh, ShaderTag shaderTag);
+
+	/// <summary>
+	/// スプライトの追加
+	/// </summary>
+	/// <param name="sprite">追加するスプライトコンポーネント</param>
+	void AddSprite(SpriteComponent* sprite);
+
+	/// <summary>
+	/// スプライトの削除
+	/// </summary>
+	/// <param name="sprite">削除するスプライトコンポーネント</param>
 	void RemoveSprite(SpriteComponent* sprite);
-	void WindowClear() { glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); } // ウィンドウ描画クリア
-	void WindowFlip() { SDL_GL_SwapWindow(mWindow); }                        // ウィンドウフリップ
-	void SetWindowTitle(const std::string& title);                           // ウィンドウタイトルのセット
 
+	/// <summary>
+	/// ポイントライトの追加
+	/// </summary>
+	/// <param name="pointLight">追加するポイントライトコンポーネント</param>
+	void AddPointLight(PointLightComponent* pointLight);
+
+	/// <summary>
+	/// ポイントライトの削除
+	/// </summary>
+	/// <param name="pointLight">削除するポイントライトコンポーネント</param>
+	void RemovePointLight(PointLightComponent* pointLight);
+
+	/// <summary>
+	/// ウィンドウの描画クリア
+	/// </summary>
+	void WindowClear() { glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); }
+
+	/// <summary>
+	/// ウィンドウフリップ
+	/// </summary>
+	void WindowFlip() { SDL_GL_SwapWindow(mWindow); }
+
+	/// <summary>
+	/// ウィンドウタイトルのセット
+	/// </summary>
+	/// <param name="title"></param>
+	void SetWindowTitle(const std::string& title);
+
+	/// <summary>
+	/// スプライトの描画開始処理
+	/// </summary>
 	void SpriteDrawBegin();
+
+	/// <summary>
+	/// スプライトの描画終了処理
+	/// </summary>
 	void SpriteDrawEnd();
 
-	void DrawTexture(class Texture* texture,int index, int xDivNum, int yDivNum,
-		             const Vector2& offset, float scale = 1.0f, float alpha = 1.0f);
+	void DrawTexture(class Texture* texture, int index, int xDivNum, int yDivNum,
+		const Vector2& offset, float scale = 1.0f, float alpha = 1.0f);
 	void DrawTexture(class Texture* texture, const Vector2& offset,
-		              float scale = 1.0f, float alpha = 1.0f);
+		float scale = 1.0f, float alpha = 1.0f);
 
-	void DrawHelthGaugeTexture(class Texture* texture, int index, int xDivNum, int yDivNum,
-		                       const Vector2& offset, float scaleX, float scaleY, float alpha);
-	void DrawHelthGauge(class Texture* texture, const Vector2& offset,
-		                                  float scaleX, float scaleY, float alpha = 1.0f);
+	/// <summary>
+	/// スプライトの頂点配列をアクティブに変更
+	/// </summary>
+	void ChangeActievSpriteVertex();
 
-	// Effekseer関連
-	Effekseer::RefPtr<EffekseerRendererGL::Renderer> GetEffekseerRenderer() { return mEffekseerRenderer; }
-	Effekseer::RefPtr<Effekseer::Manager> GetEffekseerManager() { return mEffekseerManager; }
+	/// <summary>
+	/// HPゲージの頂点配列をアクティブに変更
+	/// </summary>
+	void ChangeActiveHPGaugeVertex();
 
 private:
 
@@ -222,26 +301,29 @@ private:
 	/// </summary>
 	void DirectionalLightPass();
 
-	/// <summary>
-	/// ライトの減衰半径の計算
-	/// </summary>
-	/// <param name="constant">定数</param>
-	/// <param name="linear">線形</param>
-	/// <param name="quadratic">2乗項</param>
-	void CalcAttenuationLightRadius(const float constant, const float linear, const float quadratic);
-
 	// スクリーンの幅
 	int mScreenWidth;
 
 	// スクリーンの高さ
 	int mScreenHeight;
 
-	std::vector<SpriteComponent*>                     mSprites;           // スプライトの描画に使われるスプライトコンポーネントのポインタの可変長コンテナ
-	std::vector<class MeshComponent*>                 mMeshComponents;    // メッシュコンポーネント登録配列
-	std::vector<class MeshComponent*>                 mHighLightMeshes;   // HDRメッシュ
-	std::vector<class MeshComponent*>                 mNoramlMeshes;
-	std::vector<class SkeletalMeshComponent*>         mSkeletalMeshes;    // スケルタルメッシュの描画に使われる
-	class CubeMapComponent* mSkyBox;
+	// スプライトコンポーネントのコンテナ
+	std::vector<SpriteComponent*> mSprites;
+
+	// メッシュコンポーネントのコンテナ
+	std::vector<MeshComponent*> mMeshComponents;
+
+	// 法線マップを適用するメッシュのコンテナ
+	std::vector<MeshComponent*> mNoramlMeshes;
+
+	// HDRを適用するメッシュのコンテナ
+	std::vector <MeshComponent* > mHighLightMesh;
+
+	// スケルタルメッシュのコンテナ
+	std::vector<SkeletalMeshComponent*> mSkeletalMeshes;
+	
+	// ポイントライトのコンテナ
+	std::vector<PointLightComponent*> mPointLights;
 
 // レンダラー関連 //
 	
@@ -254,6 +336,8 @@ private:
 	// G-Bufferレンダラー
 	GBuffer* mGBufferRenderer;
 
+	CubeMapComponent* mSkyBox;
+
 // 基本行列関連 //
 
 	// ビュー行列
@@ -262,12 +346,15 @@ private:
 	// プロジェクション行列
 	Matrix4 mProjection;
 
+	// 正射影行列のプロジェクション行列
+	Matrix4 mSimpleViewProjMat;
+
 	// ライト空間行列
 	Matrix4 mLightSpaceMat;
 
 // 頂点配列 //
 	class VertexArray* mSpriteVerts;
-	class VertexArray* mHealthVerts;
+	class VertexArray* mHPGaugeVerts;
 	class VertexArray* mCubeMapVerts;
 
 	// フレームバッファID
@@ -276,17 +363,13 @@ private:
 
 // ライティング関連 //
 	
+	Mesh* mPointLightMesh;
+
     // アンビエントライト
 	Vector3 mAmbientLight;
 
 	// ディレクショナルライト
 	DirectionalLight mDirectionalLight;
-
-	// ライトの減衰半径
-	std::vector<float> mLightRadius;
-
-	std::vector<Vector3> mLightPos;
-	std::vector<Vector3> mLightColor;
 
 // レンダリングベース情報関連 //
 
@@ -299,7 +382,8 @@ private:
 	// SDLレンダリングハンドル
 	SDL_Renderer* mSDLRenderer;
 
-	const char* mGlslVersion;      // GLSLのバージョン
+	// GLSLのバージョン
+	const char* mGlslVersion;
 
 // Effekseer関連 //
 
