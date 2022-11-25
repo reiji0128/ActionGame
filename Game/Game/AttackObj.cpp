@@ -2,7 +2,6 @@
 #include "Game.h"
 #include "Math.h"
 #include "Renderer.h"
-#include "EffectComponent.h"
 #include "BoxCollider.h"
 
 AttackObj::AttackObj(Tag attackerType,const Vector3& pos, const Vector3& dir, float scale, float lifeTime)
@@ -22,6 +21,40 @@ AttackObj::AttackObj(Tag attackerType,const Vector3& pos, const Vector3& dir, fl
 
 }
 
+AttackObj::AttackObj(Tag attackerType, const Vector3& pos, const Vector3& offset, const Vector3& dir, float scale, float lifeTime)
+	:GameObject(attackerType)
+	,mLifeTime(lifeTime)
+	,mAliveTime(0.0f)
+{
+	mPosition = pos + offset * dir ;
+
+	AABB box;
+	box.mMax = Vector3(scale * 0.5, scale * 0.5, scale);
+	box.mMin = Vector3(-scale * 0.5, -scale * 0.5, 0.0f);
+	box.mIsRotatable = false;
+
+	BoxCollider* bc = new BoxCollider(this);
+	bc->SetObjectBox(box);
+}
+
+AttackObj::AttackObj(Tag attackerType, const Vector3& pos, const Vector3& dir, float scale, bool IsChangeScale, float incremental, float lifeTime)
+	:GameObject(attackerType)
+	,mLifeTime(lifeTime)
+	,mAliveTime(0.0f)
+	,mIncrementalScale(incremental)
+	,mIsChangeScale(IsChangeScale)
+{
+	mPosition = pos + dir * scale;
+
+	AABB box;
+	box.mMax = Vector3(scale * 0.5, scale * 0.5, scale);
+	box.mMin = Vector3(-scale * 0.5, -scale * 0.5, 0.0f);
+	box.mIsRotatable = false;
+
+	BoxCollider* bc = new BoxCollider(this);
+	bc->SetObjectBox(box);
+}
+
 AttackObj::AttackObj(Tag attackerType, const Vector3& pos, const Vector3& dir, const AABB& hitRange, float lifeTime)
 	: GameObject(attackerType)
 	, mLifeTime(lifeTime)
@@ -31,7 +64,7 @@ AttackObj::AttackObj(Tag attackerType, const Vector3& pos, const Vector3& dir, c
 
 	AABB box;
 	box.mMax = hitRange.mMax;
-	box.mMax = hitRange.mMin;
+	box.mMin = hitRange.mMin;
 	box.mIsRotatable = false;
 
 	BoxCollider* bc = new BoxCollider(this);
