@@ -149,7 +149,7 @@ void GameObject::RotateToNewForward()
 }
 
 /// <summary>
-/// 前進ベクトルから回転を計算
+/// 前方ベクトルから回転を計算
 /// </summary>
 /// <param name="forward">前方ベクトル</param>
 void GameObject::RotateToNewForward(const Vector3& forward)
@@ -157,6 +157,7 @@ void GameObject::RotateToNewForward(const Vector3& forward)
 	// X軸ベクトル(1,0,0)とmDirectionの間の角度を求める
 	float dot = Vector3::Dot(Vector3::UnitX, forward);
 	float angle = Math::Acos(dot);
+
 	// 下向きだった場合
 	if (dot > 0.9999f)
 	{

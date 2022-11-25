@@ -109,7 +109,7 @@ public:
 	/// 回転(クォータニオン)のセット
 	/// </summary>
 	/// <param name="rotation">セットする回転角</param>
-	void SetRotation(const Quaternion& rotation) { mRotation = rotation;  mRecomputeWorldTransform = true; }  // 回転（クォータニオン）のセット
+	void SetRotation(const Quaternion& rotation) { mRotation = rotation;  mRecomputeWorldTransform = true; }
 
 	/// <summary>
 	/// 向きのセット
