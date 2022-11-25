@@ -13,6 +13,7 @@
 #include "MeshComponent.h"
 #include "Skeleton.h"
 #include "SkeletalMeshComponent.h"
+#include "PointLightComponent.h"
 #include "SpriteComponent.h"
 #include "Animation.h"
 #include "PhysicsWorld.h"
@@ -22,6 +23,7 @@
 #include "HDR.h"
 #include "GBuffer.h"
 #include "CubeMapComponent.h"
+#include "GraphicResourceManager.h"
 
 Renderer::Renderer()
 	:mWindow(nullptr)
@@ -110,6 +112,9 @@ bool Renderer::Initialize(int screenWidth, int screenHeight, bool fullScreen)
 		return false;
 	}
 
+	// グラフィックリソースの初期化
+	GraphicResourceManager::Initialize();
+
 	// 幾つかのプラットホームでは、GLEWが無害なエラーコードを吐くのでクリアしておく
 	glGetError();
 
@@ -125,9 +130,10 @@ bool Renderer::Initialize(int screenWidth, int screenHeight, bool fullScreen)
 	mGBufferRenderer = new GBuffer;
 	mGBufferRenderer->CreateGBuffer();
 
-	// カリング
-	glFrontFace(GL_CCW);
+	// 裏面のカリング
+	glFrontFace(GL_CW);
 	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
 	
 	// スプライト用の頂点配列を作成
 	CreateSpriteVerts();
@@ -141,9 +147,14 @@ bool Renderer::Initialize(int screenWidth, int screenHeight, bool fullScreen)
 	// ライト用のフレームバッファ作成
 	CreateLightFBO();
 
+	// ポイントライトボリュームの計算で使う球体を読み込む
+	mPointLightMesh = GraphicResourceManager::LoadMesh("Assets/Sphere/Sphere.gpmesh");
+
 	// スクリーン全体を覆う頂点バッファオブジェクトを作成
 	unsigned int screenVAO;
 	ScreenVAOSetting(screenVAO);
+
+	mSimpleViewProjMat = Matrix4::CreateSimpleViewProj(static_cast<float>(mScreenWidth), static_cast<float>(mScreenHeight));;
 
 	// Effekseer初期化
 	mEffekseerRenderer = ::EffekseerRendererGL::Renderer::Create(8000, EffekseerRendererGL::OpenGLDeviceType::OpenGL3);
@@ -161,21 +172,6 @@ bool Renderer::Initialize(int screenWidth, int screenHeight, bool fullScreen)
 	mEffekseerManager->SetModelLoader(mEffekseerRenderer->CreateModelLoader());
 	mEffekseerManager->SetMaterialLoader(mEffekseerRenderer->CreateMaterialLoader());
 
-	int lightNum = 3;
-
-	for (int i = 0; i < lightNum; i++)
-	{
-		Vector3 pos((rand() % (2309 - -474 + 1)) + -474,
-			(rand() % (1069 - -1283 + 1)) + -1283,
-			(rand() % (150 - 30 + 1)) + 30);
-		mLightPos.push_back(pos);
-
-		Vector3 color(rand() % 100 / 100.0f,
-			rand() % 100 / 100.0f,
-			rand() % 100 / 100.0f);
-		mLightColor.push_back(color);
-	}
-
 	return true;
 }
 
@@ -188,6 +184,8 @@ void Renderer::Shutdown()
 	// SDL系の破棄
 	SDL_GL_DeleteContext(mContext);
 	SDL_DestroyWindow(mWindow);
+
+	GraphicResourceManager::Finalize();
 }
 
 void Renderer::Draw()
@@ -206,6 +204,18 @@ void Renderer::Draw()
 
 	// G-Bufferへの書き込み処理
 	DrawToGBuffer();
+
+	// 読み込みバッファをgBufferに指定
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, mGBufferRenderer->GetGBufferID());
+
+	// 書き込みバッファをスクリーンに指定
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+
+	// 深度情報をスクリーンの深度バッファにコピー
+	glBlitFramebuffer(0, 0, mScreenWidth, mScreenHeight, 0, 0, mScreenWidth, mScreenHeight, GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+
+	// 通常のスクリーンへの描画に戻す
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	// ライティングパス開始
 	glBindFramebuffer(GL_FRAMEBUFFER, mLightFBO);
@@ -289,6 +299,11 @@ void Renderer::SetDepthSetting(const Vector3& centerPos, const Vector3& lightDir
 	mDepthMapRenderer->CalcLightSpaceMatrix(centerPos, lightDir, upVec, lightDistance);
 }
 
+Effekseer::RefPtr<Effekseer::Manager> Renderer::GetEffekseerManager()
+{
+	return mEffekseerManager;
+}
+
 void Renderer::AddMeshComponent(MeshComponent* mesh, ShaderTag shaderTag)
 {
 
@@ -301,13 +316,13 @@ void Renderer::AddMeshComponent(MeshComponent* mesh, ShaderTag shaderTag)
 	{
 		mMeshComponents.emplace_back(mesh);
 	}
-	else if (shaderTag == ShaderTag::HDR)
-	{
-		mHighLightMeshes.emplace_back(mesh);
-	}
 	else if (shaderTag == ShaderTag::NORMAL_MAP)
 	{
 		mNoramlMeshes.emplace_back(mesh);
+	}
+	else if (shaderTag == ShaderTag::HDR)
+	{
+		mHighLightMesh.emplace_back(mesh);
 	}
 }
 
@@ -325,15 +340,15 @@ void Renderer::RemoveMeshComponent(MeshComponent* mesh,ShaderTag shaderTag)
 		auto iter = std::find(mMeshComponents.begin(), mMeshComponents.end(), mesh);
 		mMeshComponents.erase(iter);
 	}
-	else if (shaderTag == ShaderTag::HDR)
-	{
-		auto iter = std::find(mHighLightMeshes.begin(), mHighLightMeshes.end(), mesh);
-		mHighLightMeshes.erase(iter);
-	}
 	else if (shaderTag == ShaderTag::NORMAL_MAP)
 	{
 		auto iter = std::find(mNoramlMeshes.begin(), mNoramlMeshes.end(), mesh);
 		mNoramlMeshes.erase(iter);
+	}
+	else if (shaderTag == ShaderTag::HDR)
+	{
+		auto iter = std::find(mHighLightMesh.begin(), mHighLightMesh.end(), mesh);
+		mHighLightMesh.erase(iter);
 	}
 
 }
@@ -371,43 +386,27 @@ void Renderer::RemoveSprite(SpriteComponent* sprite)
 	mSprites.erase(iter);
 }
 
+void Renderer::AddPointLight(PointLightComponent* pointLight)
+{
+	mPointLights.emplace_back(pointLight);
+}
+
+void Renderer::RemovePointLight(PointLightComponent* pointLight)
+{
+	auto iter = std::find(mPointLights.begin(), mPointLights.end(), pointLight);
+	mPointLights.erase(iter);
+}
+
 void Renderer::CreateSpriteVerts()
 {
-	float vertices[] = 
-	{
-	    //    位置　　　 |　   法線       |  uv座標
-		-0.5f, 0.5f, 0.f,  0.f, 0.f, 0.0f,  0.f, 0.f, // 左上
-		 0.5f, 0.5f, 0.f,  0.f, 0.f, 0.0f,  1.f, 0.f, // 右上
-		 0.5f,-0.5f, 0.f,  0.f, 0.f, 0.0f,  1.f, 1.f, // 右下
-		-0.5f,-0.5f, 0.f,  0.f, 0.f, 0.0f,  0.f, 1.f  // 左下
-	};
-
-	unsigned int indices[] = {
-		0, 1, 2,
-		2, 3, 0
-	};
-
-	mSpriteVerts = new VertexArray(vertices, 4, VertexArray::PosNormTex, indices, 6);
+	mSpriteVerts = new VertexArray();
+	mSpriteVerts->CreateSpriteVAO();
 }
 
 void Renderer::CreateHealthGaugeVerts()
 {
-	float vertices[] =
-	{
-	    //    位置　　　 |　   法線       |  uv座標
-		0.0f, 1.0f, 0.0f,  0.f, 0.f, 0.0f,  0.f, 0.f,	//左上  0
-		1.0f, 1.0f, 0.0f,  0.f, 0.f, 0.0f,  1.f, 0.f,	//右上  1
-		0.0f, 0.0f, 0.0f,  0.f, 0.f, 0.0f,  1.f, 1.f,	//左下  2
-		1.0f, 0.0f, 0.0f,  0.f, 0.f, 0.0f,  0.f, 1.f,	//右下  3
-	};
-
-	unsigned int indices[] =
-	{
-		0, 1, 2,
-		2, 3, 1
-	};
-
-	mHealthVerts = new VertexArray(vertices, 4, VertexArray::PosNormTex, indices, 6);
+	mHPGaugeVerts = new VertexArray();
+	mHPGaugeVerts->CreateHitPointGaugeVAO();
 }
 
 void Renderer::CreateCubeMapVerts()
@@ -539,11 +538,11 @@ void Renderer::BakeDepthBuffer()
 
 void Renderer::DrawToGBuffer()
 {
-	// G-Bufferにメッシュとスケルタルメッシュを描画
 	mGBufferRenderer->GBufferRenderingBegin();
 	{
 		Shader* useShader = nullptr;
 
+		// メッシュの描画
 		useShader = GraphicResourceManager::FindUseShader(ShaderTag::G_BUFFER);
 		useShader->SetActive();
 		useShader->SetMatrixUniform("uViewProj", mView * mProjection);
@@ -556,6 +555,7 @@ void Renderer::DrawToGBuffer()
 			}
 		}
 
+		// スケルタルメッシュの描画
 		useShader = GraphicResourceManager::FindUseShader(ShaderTag::SKINNED_G_BUFFER);
 		useShader->SetActive();
 		useShader->SetMatrixUniform("uViewProj", mView * mProjection);
@@ -566,22 +566,39 @@ void Renderer::DrawToGBuffer()
 				sk->Draw(useShader);
 			}
 		}
+
+		// スカイボックスの描画
+		if (mSkyBox != nullptr)
+		{
+			useShader = GraphicResourceManager::FindUseShader(ShaderTag::SKYBOX);
+			useShader->SetActive();
+			// ゲームの空間に合わせるためのオフセット行列をセット
+			Matrix4 offset = Matrix4::CreateRotationX(Math::ToRadians(90.0f));
+
+			// Uniformに逆行列をセット
+			Matrix4 InvView = mView;
+			InvView.Invert();
+			InvView.Transpose();
+			useShader->SetMatrixUniform("uOffset", offset);
+			useShader->SetMatrixUniform("uProjection", mProjection);
+			useShader->SetMatrixUniform("uView", InvView);
+			useShader->SetIntUniform("uSkyBox", 0);
+
+			mSkyBox->Draw(useShader);
+		}
 	}
 	mGBufferRenderer->GBufferRenderingEnd();
 }
 
 void Renderer::PointLightPass()
 {
-	MeshComponent* sphereMesh = mHighLightMeshes[0];
-
 	// 深度テストを無効
 	glDisable(GL_DEPTH_TEST);
 
-	// ライトボリュームの裏側だけ描画するように設定
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_FRONT);
+	// 表面のカリング
 	glFrontFace(GL_CW);
-
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
 
 	const float constant = 1.0f;   // 定数
 	const float linear = 0.7f;     // 線形
@@ -604,27 +621,18 @@ void Renderer::PointLightPass()
 	useShader->SetIntUniform("gPosition", 0);
 	useShader->SetIntUniform("gNormal", 1);
 	useShader->SetIntUniform("gAlbedoSpec", 2);
-	useShader->SetFloatUniform("luminance", 10.0f);
+	
 
-	CalcAttenuationLightRadius(constant, linear, quadratic);
-
-	// 個数分のライト描画
-	for (unsigned int i = 0; i < mLightPos.size(); i++)
+	// ポイントライトの描画
+	for (auto pointLight : mPointLights)
 	{
-		Vector3 ambient = mLightColor[i] * 0.2f;
-		useShader->SetVectorUniform("uLight.position", mLightPos[i]);
-		useShader->SetVectorUniform("uLight.diffuse", mLightColor[i]);
-		useShader->SetVectorUniform("uLight.ambient", ambient);
-
-		Matrix4 mat = Matrix4::CreateScale(mLightRadius[i]);
-		mat = mat * Matrix4::CreateTranslation(mLightPos[i]);
-		useShader->SetMatrixUniform("model", mat);
-
-		sphereMesh->Draw(useShader, false);
+		pointLight->Draw(useShader,mPointLightMesh);
 	}
 
-	// 裏側描画OFF
-	glDisable(GL_CULL_FACE);
+	// 裏面のカリング
+	glFrontFace(GL_CCW);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
 }
 
 void Renderer::DirectionalLightPass()
@@ -637,7 +645,7 @@ void Renderer::DirectionalLightPass()
 
 	// ライトカラー設定
 	Vector3 ambientColor, color, specular;
-	ambientColor = Vector3(0.1f, 0.1f, 0.1f);
+	ambientColor = Vector3(0.3f, 0.3f, 0.3f);
 	color = Vector3(0.3f, 0.3f, 0.3f);
 	specular = Vector3(1.0f, 1.0f, 1.0f);
 	float intensity = 1.0f;
@@ -657,31 +665,13 @@ void Renderer::DirectionalLightPass()
 
 	glActiveTexture(GL_TEXTURE3);
 	glBindTexture(GL_TEXTURE_2D, mDepthMapRenderer->GetDepthTexID());
-	useShader->SetIntUniform("uDepthMap", 3);
-
-
-
 	useShader->SetIntUniform("gPosition", 0);
 	useShader->SetIntUniform("gNormal", 1);
 	useShader->SetIntUniform("gAlbedoSpec", 2);
-
+	useShader->SetIntUniform("uDepthMap", 3);
 
 	// スクリーンいっぱいの四角形を描画
 	RenderQuad();
-}
-
-void Renderer::CalcAttenuationLightRadius(const float constant, const float linear, const float quadratic)
-{
-	// 解の公式より減衰半径を計算
-	for (unsigned int i = 0; i < mLightColor.size(); i++)
-	{
-		Vector3 color = mLightColor[i];
-		float max = std::fmax(std::fmax(color.x, color.y), color.z);
-		float radius = (-linear + std::sqrtf((linear * linear) - 4.0f *
-			quadratic * (constant - (256.0f / 4.0f) * max))) / (2.0f * quadratic);
-
-		mLightRadius.push_back(radius);
-	}
 }
 
 void Renderer::SetWindowTitle(const std::string& title)
@@ -696,8 +686,6 @@ void Renderer::SpriteDrawBegin()
 	glDisable(GL_CULL_FACE);
 	glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
 	glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
-
-	mSpriteVerts->SetActive();
 }
 
 void Renderer::SpriteDrawEnd()
@@ -741,41 +729,14 @@ void Renderer::DrawTexture(Texture* texture, const Vector2& offset, float scale,
 	DrawTexture(texture, 0, 1, 1, offset, scale, alpha);
 }
 
-// 体力ゲージの描画
-void Renderer::DrawHelthGaugeTexture(Texture* texture, int index, int xDivNum, int yDivNum, const Vector2& offset, float scaleX, float scaleY, float alpha)
+void Renderer::ChangeActievSpriteVertex()
 {
-	Shader* useShader = nullptr;
-	useShader = GraphicResourceManager::FindUseShader(ShaderTag::TILEMAP);
-
-	mHealthVerts->SetActive();
-	// テクスチャの幅・高さでスケーリング
-	Matrix4 scaleMat = Matrix4::CreateScale(static_cast<float>(texture->GetWidth() / xDivNum) * scaleX,
-		static_cast<float>(texture->GetHeight() / yDivNum) * scaleY,
-		1.0f);
-
-	// スクリーン位置の平行移動
-	Matrix4 transMat = Matrix4::CreateTranslation(Vector3(offset.x - (mScreenWidth * 0.5f),
-		(mScreenHeight * 0.5f) - offset.y,
-		0.0f));
-	// ワールド変換
-	Vector2 tileSplitNum(static_cast<float>(xDivNum), static_cast<float>(yDivNum));
-	Matrix4 world = scaleMat * transMat;
-	useShader->SetActive();
-	useShader->SetMatrixUniform("uWorldTransform", world);
-	useShader->SetIntUniform("uTileIndex", index);
-	useShader->SetVector2Uniform("uTileSetSplitNum", tileSplitNum);
-	useShader->SetFloatUniform("uAlpha", alpha);
-	// テクスチャセット
-	texture->SetActive();
-
-	// 四角形描画
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+	mSpriteVerts->SetActive();
 }
 
-
-void Renderer::DrawHelthGauge(Texture* texture, const Vector2& offset, float scaleX, float scaleY, float alpha)
+void Renderer::ChangeActiveHPGaugeVertex()
 {
-	DrawHelthGaugeTexture(texture, 0, 1, 1, offset, scaleX, scaleY, alpha);
+	mHPGaugeVerts->SetActive();
 }
 
 
