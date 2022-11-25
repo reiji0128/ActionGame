@@ -1,21 +1,14 @@
 #pragma once
 #include "EnemyStaeBase.h"
 
-class EnemyObject;
-
-class EnemyStateIdle : public EnemyStateBase
+class EnemyStateDamage : public EnemyStateBase
 {
 public:
-	EnemyStateIdle();
+	EnemyStateDamage();
 
-	~EnemyStateIdle();
+	~EnemyStateDamage();
 
 	EnemyState Update(EnemyObject* owner, float deltaTime) override;
 
 	void Enter(EnemyObject* owner, float deltaTime) override;
-
-private:
-
-	// ‘Ò‹@ŽžŠÔ
-	const float mWaitTime = 2.0f;
 };

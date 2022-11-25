@@ -1,14 +1,13 @@
 #pragma once
 #include "EnemyStaeBase.h"
 
-class EnemyObject;
-
-class EnemyStateAttack : public EnemyStateBase
+class EnemyStatePreliminaryActionHand : public EnemyStateBase
 {
 public:
-	EnemyStateAttack();
 
-	~EnemyStateAttack();
+	EnemyStatePreliminaryActionHand();
+
+	~EnemyStatePreliminaryActionHand();
 
 	EnemyState Update(EnemyObject* owner, float deltaTime) override;
 

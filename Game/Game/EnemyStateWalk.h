@@ -1,14 +1,12 @@
 #pragma once
 #include "EnemyStaeBase.h"
 
-class EnemyObject;
-
-class EnemyStateIdle : public EnemyStateBase
+class EnemyStateWalk : public EnemyStateBase
 {
 public:
-	EnemyStateIdle();
+	EnemyStateWalk();
 
-	~EnemyStateIdle();
+	~EnemyStateWalk();
 
 	EnemyState Update(EnemyObject* owner, float deltaTime) override;
 
@@ -16,6 +14,9 @@ public:
 
 private:
 
-	// ‘Ò‹@ŽžŠÔ
-	const float mWaitTime = 2.0f;
+	void MoveCalc(EnemyObject* owner, float deltaTime);
+
+	Vector3 mEnemyToPlayerVec;
+
+	const float mWalkSpeed;
 };

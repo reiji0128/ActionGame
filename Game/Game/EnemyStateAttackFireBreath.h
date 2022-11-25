@@ -1,13 +1,15 @@
 #pragma once
 #include "EnemyStaeBase.h"
 
+// ‘O•ûéŒ¾
 class EnemyObject;
+class FireBreathObject;
 
-class EnemyStateFireBreath : public EnemyStateBase
+class EnemyStateAttackFireBreath : public EnemyStateBase
 {
 public:
-	EnemyStateFireBreath();
-	~EnemyStateFireBreath();
+	EnemyStateAttackFireBreath();
+	~EnemyStateAttackFireBreath();
 
 	EnemyState Update(EnemyObject* owner, float deltaTime) override;
 
@@ -15,4 +17,11 @@ public:
 
 private:
 	void AttackProcess(EnemyObject* owner, float deltaTime);
+
+	Vector3 mEnemyToPlayerVec;
+
+	Vector3 mMouthPos;
+
+	FireBreathObject* mFireBreath;
+
 };

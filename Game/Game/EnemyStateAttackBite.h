@@ -15,4 +15,7 @@ public:
 	void Enter(EnemyObject* owner, float deltaTime) override;
 
 	void Attack(EnemyObject* owner, float deltaTime);
+
+private:
+	Vector3 mAttackObjOffset;
 };

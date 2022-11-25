@@ -5,8 +5,6 @@
 
 EnemyStatePatrol::EnemyStatePatrol()
 	:mEnemyToPlayerVec(0,0,0)
-	,mAimVec(0,0,0)
-	,mRotateNow(false)
 {
 }
 
@@ -38,10 +36,12 @@ EnemyState EnemyStatePatrol::Update(EnemyObject* owner, float deltaTime)
 
 	// “GƒLƒƒƒ‰‚ÌŽ‹ŠE&”ÍˆÍ‚É“ü‚Á‚½‚ç’Ç”öƒ‚[ƒh‚Ö
 	Vector3 playerPos = GAMEINSTANCE.GetPlayerObjects()->GetPosition();
-	mEnemyToPlayerVec = playerPos - owner->GetPosition();
-	float dot = Vector3::Dot(mEnemyToPlayerVec, dir);
+	Vector3 ownerPos = owner->GetPosition();
+	mEnemyToPlayerVec = playerPos - ownerPos;
+	float length = mEnemyToPlayerVec.Length();
 
-	if (dot > 0 && mEnemyToPlayerVec.Length() < mTrackingRange)
+
+	if (InViewAngle(dir, mEnemyToPlayerVec, length))
 	{
 		return EnemyState::STATE_RUN;
 	}

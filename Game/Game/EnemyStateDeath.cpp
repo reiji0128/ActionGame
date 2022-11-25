@@ -14,7 +14,7 @@ EnemyState EnemyStateDeath::Update(EnemyObject* owner, float deltaTime)
 {
 	if (!mSkelComp->IsPlaying())
 	{
-		owner->SetState(owner->EDead);
+		//owner->SetState(owner->EDead);
 	}
 
 	return EnemyState::STATE_DEATH;
@@ -24,5 +24,5 @@ void EnemyStateDeath::Enter(EnemyObject* owner, float deltaTime)
 {
 	// アイドル状態のアニメーションを再生
 	mSkelComp = owner->GetSkeletalMeshComp();
-	mSkelComp->PlayAnimation(owner->GetAnim(EnemyState::STATE_DEATH));
+	mSkelComp->PlayAnimation(owner->GetAnim(EnemyState::STATE_DEATH),0.3);
 }
