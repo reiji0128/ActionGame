@@ -50,13 +50,17 @@ void MeshComponent::Draw(Shader* shader)
 			mOwner->GetWorldTransform());
 		// スペキュラ強度セット
 		shader->SetFloatUniform("uSpecPower", 100);
+
+		// 輝度のセット
+		float luminance = mMesh->GetLuminance();
+		shader->SetFloatUniform("uLuminance", luminance);
+
 		// アクティブテクスチャセット
 		Texture* t = mMesh->GetTexture(mTextureIndex);
 		if (t)
 		{
 			t->SetActive();
 		}
-
 
 		// 法線マップを使うのであればテクスチャをアクティブに
 		if (mMesh->GetUseNormalMapFlag())
