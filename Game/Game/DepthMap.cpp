@@ -63,7 +63,7 @@ void DepthMap::CalcLightSpaceMatrix(const Vector3& centerWorldPos, const Vector3
 	mLightDir = lightDir;
 	mLightPos = (-lightDistance) * mLightDir + centerWorldPos;
 
-	Matrix4 lightProjection = Matrix4::CreateOrtho(5000,5000, 1.0f, 10000.0f);
+	Matrix4 lightProjection = Matrix4::CreateOrtho(6000,6000, 1.0f, 15000.0f);
 	Matrix4 lightView       = Matrix4::CreateLookAt(mLightPos,centerWorldPos,upVec);
 
 	mLightSpaceMatrix = lightView * lightProjection;
