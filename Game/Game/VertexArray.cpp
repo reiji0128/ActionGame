@@ -123,6 +123,51 @@ VertexArray::~VertexArray()
 	glDeleteVertexArrays(1, &mVertexArray);
 }
 
+void VertexArray::CreateSpriteVAO()
+{
+	// 頂点一つのサイズ
+	unsigned vertexSize = 8 * sizeof(float);
+
+	float vertices[] =
+	{
+		//     位置　　　 |  　   法線       |  uv座標
+		-0.5f, 0.5f, 0.0f,  0.0f, 0.0f, 0.0f,  0.0f, 0.0f, // 左上
+		 0.5f, 0.5f, 0.0f,  0.0f, 0.0f, 0.0f,  1.0f, 0.0f, // 右上
+		 0.5f,-0.5f, 0.0f,  0.0f, 0.0f, 0.0f,  1.0f, 1.0f, // 右下
+		-0.5f,-0.5f, 0.0f,  0.0f, 0.0f, 0.0f,  0.0f, 1.0f  // 左下
+	};
+
+	unsigned int indices[] = 
+	{
+		0, 1, 2,
+		2, 3, 0
+	};
+
+	// 頂点配列の作成
+	glGenVertexArrays(1, &mVertexArray);
+	glBindVertexArray(mVertexArray);
+
+	// 頂点バッファの作成
+	glGenBuffers(1, &mVertexBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, mVertexBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
+
+	// インデックスバッファの作成
+	glGenBuffers(1, &mIndexBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIndexBuffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+	// float 3個分　→　位置 x,y,z　位置属性をセット
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, vertexSize, 0);
+	// 次のfloat 3個分 → 法線 nx, ny, nz　法線属性をセット
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, vertexSize, reinterpret_cast<void*>(sizeof(float) * 3));
+	// 次のfloat 2個分 u, v  テクスチャ座標属性をセット
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, vertexSize, reinterpret_cast<void*>(sizeof(float) * 6));
+}
+
 void VertexArray::CreateCubeMapVAO()
 {
 	float cubeMapVertices[] =
@@ -183,15 +228,18 @@ void VertexArray::CreateCubeMapVAO()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void VertexArray::CreateHitPointBarVAO()
+void VertexArray::CreateHitPointGaugeVAO()
 {
+	// 頂点一つのサイズ
+	unsigned vertexSize = 8 * sizeof(float);
+
 	float vertices[] =
 	{
-		//    位置　　　 |　   法線       |  uv座標
-		0.0f, 1.0f, 0.0f,  0.f, 0.f, 0.0f,  0.f, 0.f,	//左上  0
-		1.0f, 1.0f, 0.0f,  0.f, 0.f, 0.0f,  1.f, 0.f,	//右上  1
-		0.0f, 0.0f, 0.0f,  0.f, 0.f, 0.0f,  1.f, 1.f,	//左下  2
-		1.0f, 0.0f, 0.0f,  0.f, 0.f, 0.0f,  0.f, 1.f,	//右下  3
+		//    位置　　　 |　     法線       |   uv座標
+		0.0f, 1.0f, 0.0f,  0.0f, 0.0f, 0.0f,  0.0f, 0.0f,	//左上  0
+		1.0f, 1.0f, 0.0f,  0.0f, 0.0f, 0.0f,  1.0f, 0.0f,	//右上  1
+		0.0f, 0.0f, 0.0f,  0.0f, 0.0f, 0.0f,  1.0f, 1.0f,	//左下  2
+		1.0f, 0.0f, 0.0f,  0.0f, 0.0f, 0.0f,  0.0f, 1.0f,	//右下  3
 	};
 
 	unsigned int indices[] =
@@ -216,13 +264,13 @@ void VertexArray::CreateHitPointBarVAO()
 
 	// float 3個分　→　位置 x,y,z　位置属性をセット
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertices), 0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, vertexSize, 0);
 	// 次のfloat 3個分 → 法線 nx, ny, nz　法線属性をセット
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(vertices), reinterpret_cast<void*>(sizeof(float) * 3));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, vertexSize, reinterpret_cast<void*>(sizeof(float) * 3));
 	// 次のfloat 2個分 u, v  テクスチャ座標属性をセット
 	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(vertices), reinterpret_cast<void*>(sizeof(float) * 6));
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, vertexSize, reinterpret_cast<void*>(sizeof(float) * 6));
 }
 
 void VertexArray::SetActive()

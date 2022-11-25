@@ -36,15 +36,18 @@ public:
 	/// </summary>
 	~VertexArray();
 
+	// 頂点配列オブジェクトの作成
+	void CreateSpriteVAO();
+
 	/// <summary>
 	/// キューブマップの頂点配列オブジェクトの作成
 	/// </summary>
 	void CreateCubeMapVAO();
 
 	/// <summary>
-	/// ヒットポイントバーの頂点配列オブジェクトの作成
+	/// ヒットポイントゲージの頂点配列オブジェクトの作成
 	/// </summary>
-	void CreateHitPointBarVAO();
+	void CreateHitPointGaugeVAO();
 
 // セッター　//	
 
