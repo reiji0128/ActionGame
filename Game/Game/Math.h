@@ -236,6 +236,16 @@ public:
 		return v - 2.0f * Vector2::Dot(v, n) * n;
 	}
 
+	static float Angle(const Vector2& from, const Vector2& to)
+	{
+		// fromVecとtoVecで内積を計算
+		float dot = Vector2::Dot(to, from);
+		// dotからθ(ラジアン)を計算
+		float rad = Math::Acos(dot / (to.Length() * from.Length()));
+		// θ(ラジアン)を弧度法に変換
+		return rad * (180 / Math::Pi);
+	}
+
 	// Transform vector by matrix
 	static Vector2 Transform(const Vector2& vec, const class Matrix3& mat, float w = 1.0f);
 
@@ -392,6 +402,16 @@ public:
 	static Vector3 Reflect(const Vector3& v, const Vector3& n)
 	{
 		return v - 2.0f * Vector3::Dot(v, n) * n;
+	}
+
+	static float Angle(const Vector3& from, const Vector3& to)
+	{
+		// fromVecとtoVecで内積を計算
+		float dot = Vector3::Dot(to, from);
+		// dotからθ(ラジアン)を計算
+		float rad = Math::Acos(dot / (to.Length() * from.Length()));
+		// θ(ラジアン)を弧度法に変換
+		return rad * (180 / Math::Pi);
 	}
 
 	static Vector3 Transform(const Vector3& vec, const class Matrix4& mat, float w = 1.0f);
