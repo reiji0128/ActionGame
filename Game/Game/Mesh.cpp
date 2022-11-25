@@ -196,7 +196,10 @@ bool Mesh::Load(const std::string& fileName)
 	}
 
 	// スペキュラー強度
-	mSpecPower = static_cast<float>(doc["specularPower"].GetDouble());
+	mSpecPower = static_cast<float>(doc["specularPower"].GetFloat());
+
+	// 輝度
+	mLuminance = static_cast<float>(doc["luminance"].GetFloat());
 
 	//頂点読み込み
 	const rapidjson::Value& vertsJson = doc["vertices"];

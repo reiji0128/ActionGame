@@ -25,6 +25,8 @@ public:
 	~Mesh();
 	//メッシュのロード・アンロード
 	bool Load(const std::string& fileName);
+
+
 	void Unload();
 
 	/// <summary>
@@ -60,6 +62,9 @@ public:
 	// スペキュラーの取得
 	float GetSpecPower() const{ return mSpecPower; }
 
+	// 輝度の取得
+	float GetLuminance() const { return mLuminance; }
+
 	bool GetUseNormalMapFlag() const { return mUseNormalMap; }
 
 private:
@@ -79,6 +84,9 @@ private:
 	
 	//表面の鏡面反射力
 	float mSpecPower;
+
+	// 輝度
+	float mLuminance;
 
 	// 法線マップを使用するかどうかのフラグ
 	bool mUseNormalMap;
