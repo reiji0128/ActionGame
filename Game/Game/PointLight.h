@@ -6,7 +6,7 @@ class PointLight : GameObject
 {
 public:
 
-	PointLight(const Vector3 &pos);
+	PointLight(const Vector3 &pos,const Vector3& dir);
 
 	~PointLight();
 
