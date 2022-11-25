@@ -4,9 +4,11 @@
 #include "EnemyObject.h"
 #include "ThirdPersonCameraObject.h"
 #include "StaticBGObject.h"
+#include "PointLight.h"
 #include "BGCollisionSetter.h"
 #include "SkyBoxObject.h"
 #include "PointLight.h"
+#include "EventNotificator.h"
 
 StageCreator::StageCreator()
 {
@@ -15,40 +17,46 @@ StageCreator::StageCreator()
 
 StageCreator::~StageCreator()
 {
-	delete mPlayer;
-	delete mSword;
-	delete mCamera;
 }
+
+//IHitPointGetter* StageCreator::GetPlayerHPGetter() const
+//{
+//	//return static_cast<IHitPointGetter*>(mPlayer);
+//}
+//
+//IHitPointGetter* StageCreator::GetEnemyHPGetter() const
+//{
+//	//return static_cast<IHitPointGetter*>(mEnemy);
+//}
 
 void StageCreator::CreateStage()
 {
-	// プレイヤーの生成
-	mPlayer = new PlayerObject(Vector3(890, -50, 110),                   // 座標
-		                       1.0f,                                     // スケール
-		                       "Assets/Player/Great_Sword_Idle.gpmesh",  // gpMeshのファイルパス
-		                       "Assets/Player/Great_Sword_Idle.gpskel"); // gpSkelのファイルパス
-
-	// 武器の生成
-	mSword = new SwordObject(Vector3(90, 20, 140),                     // オフセット位置
-		                     Vector3(90, 60, -30),                     // オフセット角度(radian)
-		                     "Assets/Sword/SK_Sword.gpmesh",           // gpMeshのファイルパス
-		                     mPlayer->GetSkeltalMeshComp(),            // アタッチ先のSkeltalMeshCompクラスのポインタ
-		                     "LeftHandIndex4");                        // アタッチ先のボーン名
-
-	new EnemyObject(Vector3(2941, -949, 112),
-		             0.5f,
-		             "Assets/Dragon/DRAGON.gpmesh",
-		             "Assets/Dragon/DRAGON.gpskel");
-
-	// カメラの生成
-	mCamera= new ThirdPersonCameraObject(mPlayer);
-	mCamera->SetCameraLength(500.0f);
-
-	new PointLight(Vector3(0, 0, 0));
-
 	// バックグラウンドの生成
 	new StaticBGObject(Vector3(1430, -1125, 110), "Assets/BackGround/FloorMesh.gpmesh");
 	new StaticBGObject(Vector3(1885, -980, 100), "Assets/BackGround/WallMesh.gpmesh");
+
+	// ライトの生成
+	new PointLight(Vector3(407.0f, -2600.0f, 500.0f) ,Vector3(1,0,0));
+	new PointLight(Vector3(1229.0f, -2600.0f, 500.0f), Vector3(1, 0, 0));
+	new PointLight(Vector3(2000.0f, -2600.0f, 500.0f), Vector3(1, 0, 0));
+	new PointLight(Vector3(2800.0f, -2600.0f, 500.0f), Vector3(1, 0, 0));
+
+	new PointLight(Vector3(407.0f,  900.0f, 500.0f), Vector3(-1, 0, 0));
+	new PointLight(Vector3(1229.0f, 900.0f, 500.0f), Vector3(-1, 0, 0));
+	new PointLight(Vector3(2000.0f, 900.0f, 500.0f), Vector3(-1, 0, 0));
+	new PointLight(Vector3(2800.0f, 900.0f, 500.0f), Vector3(-1, 0, 0));
+
+	new PointLight(Vector3(-319.0f, -2152.0f, 500.0f), Vector3(0, -1, 0));
+	new PointLight(Vector3(-319.0f, -1552.0f, 500.0f), Vector3(0, -1, 0));
+	new PointLight(Vector3(-319.0f, -952.0f, 500.0f), Vector3(0, -1, 0));
+	new PointLight(Vector3(-319.0f, -352.0f, 500.0f), Vector3(0, -1, 0));
+	new PointLight(Vector3(-319.0f, 352.0f, 500.0f), Vector3(0, -1, 0));
+
+	new PointLight(Vector3(3770.0f, -2152.0f, 500.0f), Vector3(0, 1, 0));
+	new PointLight(Vector3(3770.0f, -1552.0f, 500.0f), Vector3(0, 1, 0));
+	new PointLight(Vector3(3770.0f, -952.0f, 500.0f), Vector3(0, 1, 0));
+	new PointLight(Vector3(3770.0f, -352.0f, 500.0f), Vector3(0, 1, 0));
+	new PointLight(Vector3(3770.0f, 352.0f, 500.0f), Vector3(0, 1, 0));
 
 	// バックグラウンドの当たり判定の生成
 	new BGCollisionSetter("Assets/BackGround/BackGroundCollision.json");

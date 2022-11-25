@@ -1,8 +1,8 @@
 #pragma once
 
-class PlayerObject;
-class SwordObject;
-class ThirdPersonCameraObject;
+// 前方宣言
+
+class IHitPointGetter;
 
 class StageCreator
 {
@@ -11,10 +11,11 @@ public:
 
 	~StageCreator();
 
+// ゲッター //
+	//IHitPointGetter* GetPlayerHPGetter() const;
+
+	//IHitPointGetter* GetEnemyHPGetter() const;
+
 private:
 	void CreateStage();
-
-	PlayerObject* mPlayer;
-	SwordObject* mSword;
-	ThirdPersonCameraObject* mCamera;
 };
