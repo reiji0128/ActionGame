@@ -9,7 +9,7 @@ public:
 	            ~AudioManager();
 	class Sound* GetSound(const std::string& fileName);
 	void         RemoveSound(const std::string& fileName);
-	void         PlaySound(const std::string& fileName);
+	void         PlaySoundW(const std::string& fileName);
 	void         StopSound(const std::string& fileName);
 	bool         IsPlayingSound(const std::string& fileName);
 
@@ -18,8 +18,8 @@ public:
 	void         PlayFadeInMusic(const std::string& fileName, int fadeInTime);
 	void         PlayMusic(const std::string& fileName);
 	void         FadeOutMusic(int fadeOutTime);
-	void         StopMusic();
-	bool         IsPlayingMusic();
+	void         StopMusic(const std::string fileName);
+	bool         IsPlayingMusic(const std::string& fileName);
 
 	void         ShutDown();
 

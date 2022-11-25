@@ -54,7 +54,7 @@ void AudioManager::RemoveSound(const std::string& fileName)
 	}
 }
 
-void AudioManager::PlaySound(const std::string& fileName)
+void AudioManager::PlaySoundW(const std::string& fileName)
 {
 	//サウンド鳴らす
 	mSounds[fileName]->Play();
@@ -123,14 +123,14 @@ void AudioManager::FadeOutMusic(int fadeOutTime)
 	Music::FadeOutMusic(fadeOutTime);
 }
 
-void AudioManager::StopMusic()
+void AudioManager::StopMusic(const std::string fileName)
 {
-	Music::Stop();
+	mMusics[fileName]->Stop();
 }
 
-bool AudioManager::IsPlayingMusic()
+bool AudioManager::IsPlayingMusic(const std::string& fileName)
 {
-	return Music::IsPlaying();
+	return mMusics[fileName]->IsPlaying();
 }
 
 void AudioManager::ShutDown()
