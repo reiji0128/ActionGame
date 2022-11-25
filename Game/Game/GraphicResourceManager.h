@@ -35,7 +35,6 @@ public:
 	/// </summary>
 	static void ShowResource();
 
-
 	/// <summary>
 	/// テクスチャの取得
 	/// </summary>
@@ -65,7 +64,7 @@ public:
 	/// <returns>アニメーションクラスのポインタ</returns>
 	const static Animation* LoadAnimation(const char* filePass, bool isAnimationLoop);
 
-// ゲッター //
+
 	static EffekseerEffect* GetEffect(const char16_t* filePass);
 
 private:
@@ -76,7 +75,7 @@ private:
 	GraphicResourceManager();
 
 	/// <summary>
-	/// グラフィックリソースマネージャの初期化処理
+	/// デストラクタ
 	/// </summary>
 	~GraphicResourceManager();
 

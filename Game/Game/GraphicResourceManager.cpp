@@ -334,7 +334,7 @@ bool GraphicResourceManager::LoadShaders()
 	AddShader(shader, ShaderTag::HDR_BLOOM_BLEND);
 
 
-	// スクリーンバッファーシェーダーの読み込み
+	// スクリーンバッファーシェーダー(HDR用)の読み込み
 	shader = new Shader();
 	if (!shader->Load("Shaders/ScreenBuffer.vert", "Shaders/HDR.frag"))
 	{
@@ -411,6 +411,15 @@ bool GraphicResourceManager::LoadShaders()
 		return false;
 	}
 	AddShader(shader, ShaderTag::HIGH_LIGHT);
+
+	// エミッシブシェーダーの読み込み
+	shader = new Shader();
+	if (!shader->Load("Shaders/Emissive.vert", "Shaders/Emissive.frag"))
+	{
+		printf("エミッシブシェーダーの読み込み失敗");
+		return false;
+	}
+	AddShader(shader, ShaderTag::EMISSIVE);
 
 	return true;
 }
