@@ -22,6 +22,7 @@ enum class ShaderTag
 	POINT_LIGHT,         // ポイントライト
 	DIRECTIONAL_LIGHT,   // ディレクショナルライト
 	HIGH_LIGHT,          // ハイライト
+	EMISSIVE,            // エミッシブ
 
 	NONE,                // 適用するシェーダーなし
 };
