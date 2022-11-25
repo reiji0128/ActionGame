@@ -2,6 +2,7 @@
 layout (location = 0) out vec3 gPosition;   // G-Bufferの位置テクスチャに出力
 layout (location = 1) out vec3 gNormal;     // G-Bufferの法線テクスチャに出力
 layout (location = 2) out vec4 gAlbedoSpec; // G-BufferのRGBAテクスチャに出力
+layout (location = 3) out vec4 gDepth;      // G-Bufferの深度テクスチャに出力
 
 in vec2 TexCoords;
 in vec3 FragPos;
@@ -9,6 +10,17 @@ in vec3 Normal;
 
 uniform sampler2D uDiffuse;  // オブジェクトのディフューズマップ
 uniform sampler2D uSpecular; // オブジェクトのスペキュラマップ
+
+float near = 0.1;
+float far  = 100.0;
+
+float LinearizeDepth(float depth)
+{
+	// 深度値をNDCに変換
+	float z = depth * 2.0 - 1.0; 
+
+	return (2.0 * near * far) / (far + near - z * (far - near));
+}
 
 void main()
 {
@@ -21,4 +33,10 @@ void main()
 	// スペキュラ強度をアルベドのa要素に保存
 	//gAlbedoSpec.a = texture(uSpecular,TexCoords).r;
 	gAlbedoSpec.a = 0.1;
+
+	float depth =  LinearizeDepth(gl_FragCoord.z) / far;
+
+	// フラグメントごとの深度をG-Bufferに保存
+	gDepth = vec4(vec3(depth), 1.0);
 }
+

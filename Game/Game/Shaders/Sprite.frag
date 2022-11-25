@@ -8,12 +8,12 @@ out vec4 outColor;
 
 // テクスチャサンプリングに使用
 uniform sampler2D uTexture;
-uniform float alpha;
+uniform float uAlpha;
 
 void main()
 {
 	// テクスチャからのサンプルカラー
 	vec4 color = texture(uTexture,fragTexCoord);
-	color.a = color.a * alpha;
+	color.a = color.a * uAlpha;
 	outColor = color;
 }

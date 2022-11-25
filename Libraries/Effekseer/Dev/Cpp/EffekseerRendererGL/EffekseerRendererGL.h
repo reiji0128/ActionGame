@@ -511,7 +511,7 @@ public:
 		\~Japanese	深度画像とZから深度を復元するためのパラメーターを設定する。
 	*/
 	virtual void SetDepth(::Effekseer::Backend::TextureRef texture, const DepthReconstructionParameter& reconstructionParam);
-
+	
 	/**
 		@brief	
 		\~English	Get the graphics device

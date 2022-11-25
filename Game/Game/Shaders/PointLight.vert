@@ -10,9 +10,6 @@ out vec2 TexCoords;
 
 void main()
 {
-	//vec4 pos = uProjection * uView * model * vec4(inPos, 1.0);
-	//gl_Position = pos ;
-
 	vec4 pos = vec4(inPos,1.0);
 	pos = pos * model;
 	pos = pos * uView * uProjection;

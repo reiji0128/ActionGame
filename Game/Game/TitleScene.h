@@ -3,6 +3,12 @@
 #include "SceneBase.h"
 #include "Renderer.h"
 
+// 前方宣言
+class BitmapText;
+class TitleSprite;
+class ButtonSprite;
+class CurtainSprite;
+
 class TitleScene :public SceneBase
 {
 public:
@@ -25,12 +31,25 @@ public:
 	/// <summary>
 	/// シーンの描画処理
 	/// </summary>
-	void	   Draw();
+	void Draw();
 
-	/// <summary>
+private:
+
+	float mTimer;
+
+	// 次の移行するまでの時間
+	const float mTransitionTime;
+
+	bool mIsCount;
+
+	bool mIsPush;
+
 	/// ビットマップテキストのポインタ
-	/// </summary>
-	class BitmapText* mFont;
+	BitmapText* mFont;
 
-	class Texture* mTitle;
+	TitleSprite* mTitleSprite;
+
+	ButtonSprite* mButton;
+
+	CurtainSprite* mCurtain;
 };

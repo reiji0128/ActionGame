@@ -151,20 +151,128 @@
     <Filter Include="ソース ファイル\GameObject\EnemyObject\State">
       <UniqueIdentifier>{33e4a93b-caa8-4aed-9012-0dfb4a0450d6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Renderer\GraphicResourceManager">
-      <UniqueIdentifier>{d03c1ead-74e7-43a9-a0a0-fff2b9685abb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\HUD">
-      <UniqueIdentifier>{ded1d911-6719-4bba-9c54-96bcfeb90229}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Renderer\GBuffer">
       <UniqueIdentifier>{0a55b9ee-ea60-4a75-9d4f-46a86412c2d8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Renderer\PointLight">
+    <Filter Include="ソース ファイル\UI">
+      <UniqueIdentifier>{ded1d911-6719-4bba-9c54-96bcfeb90229}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\EnemyObject\State\Base">
+      <UniqueIdentifier>{eda9c3cf-efc6-4e20-a5f8-b7684450fe04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\EnemyObject\State\Idle">
+      <UniqueIdentifier>{dd33abab-4c20-41df-9a11-aa4ffeb601a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\EnemyObject\State\Run">
+      <UniqueIdentifier>{15b0ffdc-36da-4f2e-a923-af8c8ce4d282}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\EnemyObject\State\Attack">
+      <UniqueIdentifier>{feeae844-7c31-460c-ab3e-256909688787}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\EnemyObject\State\Death">
+      <UniqueIdentifier>{7ccbb949-6d08-4eab-aa85-96c3cf9d9155}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\PlayerObject\State\Base">
+      <UniqueIdentifier>{ed1c805a-c32f-4ab3-98fd-d78a4b680bd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\PlayerObject\State\Death">
+      <UniqueIdentifier>{5f61887d-7316-4965-8c77-e2362a3d04cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\PlayerObject\State\Idle">
+      <UniqueIdentifier>{b33840b3-fbc3-4353-b6df-a01ec9e3f44b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\PlayerObject\State\Run">
+      <UniqueIdentifier>{91bef8c5-554e-488c-889d-528867e1b6c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\PlayerObject\State\Attack">
+      <UniqueIdentifier>{4d991549-3fea-419c-96c2-4c8ca5ab2fd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GraphicResourceManager">
+      <UniqueIdentifier>{d03c1ead-74e7-43a9-a0a0-fff2b9685abb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\PointLight">
+      <UniqueIdentifier>{0201fe0a-9da1-4fc9-9b98-7776a72d7b70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\EventNotificator">
+      <UniqueIdentifier>{159d8ea4-0098-480d-9509-1fb2b459ccb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\PlayerObject\State\Damage">
+      <UniqueIdentifier>{062bdb57-bbf4-41e2-be35-7cb40ed2bed2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\EnemyObject\State\Damage">
+      <UniqueIdentifier>{e8297b0a-60f5-4fa2-8276-a958a3a2e829}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\EnemyObject\State\Patrol">
+      <UniqueIdentifier>{a137b69b-b931-4321-a0f3-281513778b84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\EnemyObject\State\Detection">
+      <UniqueIdentifier>{e9cc2a58-6639-461f-9120-611b240d7866}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\PlayerObject\State\StandUp">
+      <UniqueIdentifier>{473c8c04-fe30-435c-8c56-eed4e1a4a3c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\PlayerObject\State\FlyingBack">
+      <UniqueIdentifier>{b993961f-4150-47b8-ad03-a35e14e9765c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\BackGround\PointLight">
       <UniqueIdentifier>{621fdbbc-c461-44b4-9e6d-6c5e7ae72d79}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\HUD\PlayerHealthBar">
+    <Filter Include="ソース ファイル\GameObject\EnemyObject\State\Walk">
+      <UniqueIdentifier>{fcd53936-9c0c-45fd-aa3f-2c402996fe0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\GameSceneUI">
+      <UniqueIdentifier>{809159af-5772-4b98-a45c-80f232508d83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\GameSceneUI\HitPointGauge">
       <UniqueIdentifier>{94381bd6-bc66-4d2a-aa49-5b5026fabbb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\GameSceneUI\HitPointGaugeFrame">
+      <UniqueIdentifier>{18207530-32c1-46a9-a2a0-b0ee4f0d0e7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\GameSceneUI\HitPointBackGround">
+      <UniqueIdentifier>{bad56ca4-726e-4597-91bb-c56d53abcf7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\FIreBall">
+      <UniqueIdentifier>{0f8e943b-f9be-4251-adf6-d6d6d578a53b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\TitleSceneUI">
+      <UniqueIdentifier>{5afafc9c-8b7f-4f0e-a0c1-2ab39720a4ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\TitleSceneUI\Title">
+      <UniqueIdentifier>{1f0b64d6-b730-4601-b74f-3b5cdac6775f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\FireBreath">
+      <UniqueIdentifier>{265b2c93-43da-42d9-ad46-41fc8e392c33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\EnemyObject\State\PreliminaryAction">
+      <UniqueIdentifier>{9578bf9c-6015-440a-8cbc-d1fb7393808b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Effect">
+      <UniqueIdentifier>{ecc7d797-0c1c-4caf-bcb7-1b5f43294bb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\TitleSceneUI\Button">
+      <UniqueIdentifier>{fdd4d539-3ab5-473a-aded-30094e1b5f91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\DamageNotificator">
+      <UniqueIdentifier>{956a89de-afbd-4633-8f9f-926222e6be1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\PlayerObject\State\Roll">
+      <UniqueIdentifier>{304e5b61-937f-43b0-8233-cdd6f5c771bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Effect\HitEffect">
+      <UniqueIdentifier>{d3ee646e-25bc-4e3b-b195-7cb083e16e69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Effect\Slash">
+      <UniqueIdentifier>{b26168ca-409c-4f6e-9b24-d9a33915cda8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\GameSceneUI\GameClear">
+      <UniqueIdentifier>{11137356-b9af-4423-8abc-3f34ce013ecc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\GameSceneUI\GameOver">
+      <UniqueIdentifier>{bdab12be-8928-4817-b9f4-cae5de776d18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\Curtain">
+      <UniqueIdentifier>{091c7b42-9673-4318-a17e-9e535ce493cb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -315,59 +423,137 @@
     <ClCompile Include="PlayerObject.cpp">
       <Filter>ソース ファイル\GameObject\PlayerObject</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerStateIdle.cpp">
-      <Filter>ソース ファイル\GameObject\PlayerObject\State</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerStateRun.cpp">
-      <Filter>ソース ファイル\GameObject\PlayerObject\State</Filter>
-    </ClCompile>
     <ClCompile Include="SwordObject.cpp">
       <Filter>ソース ファイル\GameObject\Sword</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerStateFirstAttack.cpp">
-      <Filter>ソース ファイル\GameObject\PlayerObject\State</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyStateIdle.cpp">
-      <Filter>ソース ファイル\GameObject\EnemyObject\State</Filter>
     </ClCompile>
     <ClCompile Include="EnemyObject.cpp">
       <Filter>ソース ファイル\GameObject\EnemyObject</Filter>
     </ClCompile>
     <ClCompile Include="GraphicResourceManager.cpp">
-      <Filter>ソース ファイル\Renderer\GraphicResourceManager</Filter>
+      <Filter>ソース ファイル\GraphicResourceManager</Filter>
     </ClCompile>
-    <ClCompile Include="HUD.cpp">
-      <Filter>ソース ファイル\HUD</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyStateRun.cpp">
-      <Filter>ソース ファイル\GameObject\EnemyObject\State</Filter>
+    <ClCompile Include="UIScreen.cpp">
+      <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
     <ClCompile Include="GBuffer.cpp">
       <Filter>ソース ファイル\Renderer\GBuffer</Filter>
     </ClCompile>
     <ClCompile Include="PointLight.cpp">
-      <Filter>ソース ファイル\Renderer\PointLight</Filter>
+      <Filter>ソース ファイル\BackGround\PointLight</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyStatePatrol.cpp">
-      <Filter>ソース ファイル\GameObject\EnemyObject\State</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyStateDeath.cpp">
-      <Filter>ソース ファイル\GameObject\EnemyObject\State</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyStateAttack.cpp">
-      <Filter>ソース ファイル\GameObject\EnemyObject\State</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyStateAttackHand.cpp">
-      <Filter>ソース ファイル\GameObject\EnemyObject\State</Filter>
+    <ClCompile Include="HitPointGauge.cpp">
+      <Filter>ソース ファイル\UI\GameSceneUI\HitPointGauge</Filter>
     </ClCompile>
     <ClCompile Include="EnemyStaeBase.cpp">
-      <Filter>ソース ファイル\GameObject\EnemyObject\State</Filter>
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\Base</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyStateThink.cpp">
-      <Filter>ソース ファイル\GameObject\EnemyObject</Filter>
+    <ClCompile Include="EnemyStateIdle.cpp">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\Idle</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerHitPointBar.cpp">
-      <Filter>ソース ファイル\HUD\PlayerHealthBar</Filter>
+    <ClCompile Include="EnemyStateRun.cpp">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\Run</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStateAttackHand.cpp">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStateAttackBite.cpp">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStateDeath.cpp">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\Death</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStateDeath.cpp">
+      <Filter>ソース ファイル\GameObject\PlayerObject\State\Death</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStateFirstAttack.cpp">
+      <Filter>ソース ファイル\GameObject\PlayerObject\State\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStateIdle.cpp">
+      <Filter>ソース ファイル\GameObject\PlayerObject\State\Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStateRun.cpp">
+      <Filter>ソース ファイル\GameObject\PlayerObject\State\Run</Filter>
+    </ClCompile>
+    <ClCompile Include="PointLightComponent.cpp">
+      <Filter>ソース ファイル\Component\PointLight</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStateAttackFireBreath.cpp">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSceneUI.cpp">
+      <Filter>ソース ファイル\UI\GameSceneUI</Filter>
+    </ClCompile>
+    <ClCompile Include="HitPointGaugeFrame.cpp">
+      <Filter>ソース ファイル\UI\GameSceneUI\HitPointGaugeFrame</Filter>
+    </ClCompile>
+    <ClCompile Include="EventNotificator.cpp">
+      <Filter>ソース ファイル\EventNotificator</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStateSecondAttack.cpp">
+      <Filter>ソース ファイル\GameObject\PlayerObject\State\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStateDamage.cpp">
+      <Filter>ソース ファイル\GameObject\PlayerObject\State\Damage</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStateDamage.cpp">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\Damage</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStateAttackFireBall.cpp">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStatePatrol.cpp">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\Patrol</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStateDetection.cpp">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\Detection</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStateStandUp.cpp">
+      <Filter>ソース ファイル\GameObject\PlayerObject\State\StandUp</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStateFlyingBack.cpp">
+      <Filter>ソース ファイル\GameObject\PlayerObject\State\FlyingBack</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStateWalk.cpp">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\Walk</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleSprite.cpp">
+      <Filter>ソース ファイル\UI\TitleSceneUI\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonSprite.cpp">
+      <Filter>ソース ファイル\UI\TitleSceneUI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="HitPointBackGround.cpp">
+      <Filter>ソース ファイル\UI\GameSceneUI\HitPointBackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBallObject.cpp">
+      <Filter>ソース ファイル\GameObject\FIreBall</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBreathObject.cpp">
+      <Filter>ソース ファイル\GameObject\FireBreath</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStatePreliminaryActionHand.cpp">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\PreliminaryAction</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStatePreliminaryActionBite.cpp">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\PreliminaryAction</Filter>
+    </ClCompile>
+    <ClCompile Include="DamageNotificator.cpp">
+      <Filter>ソース ファイル\DamageNotificator</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStateRollForward.cpp">
+      <Filter>ソース ファイル\GameObject\PlayerObject\State\Roll</Filter>
+    </ClCompile>
+    <ClCompile Include="HitEffect.cpp">
+      <Filter>ソース ファイル\Effect\HitEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="GameClearSprite.cpp">
+      <Filter>ソース ファイル\UI\GameSceneUI\GameClear</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverSprite.cpp">
+      <Filter>ソース ファイル\UI\GameSceneUI\GameOver</Filter>
+    </ClCompile>
+    <ClCompile Include="CurtainSprite.cpp">
+      <Filter>ソース ファイル\UI\Curtain</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -524,62 +710,152 @@
     <ClInclude Include="PlayerObject.h">
       <Filter>ソース ファイル\GameObject\PlayerObject</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerStateBase.h">
-      <Filter>ソース ファイル\GameObject\PlayerObject\State</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerStateIdle.h">
-      <Filter>ソース ファイル\GameObject\PlayerObject\State</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerStateRun.h">
-      <Filter>ソース ファイル\GameObject\PlayerObject\State</Filter>
-    </ClInclude>
     <ClInclude Include="SwordObject.h">
       <Filter>ソース ファイル\GameObject\Sword</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerStateFirstAttack.h">
-      <Filter>ソース ファイル\GameObject\PlayerObject\State</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyStaeBase.h">
-      <Filter>ソース ファイル\GameObject\EnemyObject\State</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyStateIdle.h">
-      <Filter>ソース ファイル\GameObject\EnemyObject\State</Filter>
     </ClInclude>
     <ClInclude Include="EnemyObject.h">
       <Filter>ソース ファイル\GameObject\EnemyObject</Filter>
     </ClInclude>
     <ClInclude Include="GraphicResourceManager.h">
-      <Filter>ソース ファイル\Renderer\GraphicResourceManager</Filter>
+      <Filter>ソース ファイル\GraphicResourceManager</Filter>
     </ClInclude>
-    <ClInclude Include="HUD.h">
-      <Filter>ソース ファイル\HUD</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyStateRun.h">
-      <Filter>ソース ファイル\GameObject\EnemyObject\State</Filter>
+    <ClInclude Include="UIScreen.h">
+      <Filter>ソース ファイル\UI</Filter>
     </ClInclude>
     <ClInclude Include="GBuffer.h">
       <Filter>ソース ファイル\Renderer\GBuffer</Filter>
     </ClInclude>
     <ClInclude Include="PointLight.h">
-      <Filter>ソース ファイル\Renderer\PointLight</Filter>
+      <Filter>ソース ファイル\BackGround\PointLight</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyStatePatrol.h">
-      <Filter>ソース ファイル\GameObject\EnemyObject\State</Filter>
+    <ClInclude Include="EnemyStateIdle.h">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\Idle</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyStateDeath.h">
-      <Filter>ソース ファイル\GameObject\EnemyObject\State</Filter>
+    <ClInclude Include="EnemyStateRun.h">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\Run</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyStateAttack.h">
-      <Filter>ソース ファイル\GameObject\EnemyObject\State</Filter>
+    <ClInclude Include="EnemyStaeBase.h">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStateAttackBite.h">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\Attack</Filter>
     </ClInclude>
     <ClInclude Include="EnemyStateAttackHand.h">
-      <Filter>ソース ファイル\GameObject\EnemyObject\State</Filter>
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\Attack</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyStateThink.h">
-      <Filter>ソース ファイル\GameObject\EnemyObject</Filter>
+    <ClInclude Include="EnemyStateDeath.h">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\Death</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerHitPointBar.h">
-      <Filter>ソース ファイル\HUD\PlayerHealthBar</Filter>
+    <ClInclude Include="PlayerStateBase.h">
+      <Filter>ソース ファイル\GameObject\PlayerObject\State\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStateDeath.h">
+      <Filter>ソース ファイル\GameObject\PlayerObject\State\Death</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStateFirstAttack.h">
+      <Filter>ソース ファイル\GameObject\PlayerObject\State\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStateIdle.h">
+      <Filter>ソース ファイル\GameObject\PlayerObject\State\Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStateRun.h">
+      <Filter>ソース ファイル\GameObject\PlayerObject\State\Run</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStateSecondAttack.h">
+      <Filter>ソース ファイル\GameObject\PlayerObject\State\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="PointLightComponent.h">
+      <Filter>ソース ファイル\Component\PointLight</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStateAttackFireBreath.h">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="HitPointGauge.h">
+      <Filter>ソース ファイル\UI\GameSceneUI\HitPointGauge</Filter>
+    </ClInclude>
+    <ClInclude Include="IHitPointGetter.h">
+      <Filter>ソース ファイル\GameObject\PlayerObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSceneUI.h">
+      <Filter>ソース ファイル\UI\GameSceneUI</Filter>
+    </ClInclude>
+    <ClInclude Include="HitPointGaugeFrame.h">
+      <Filter>ソース ファイル\UI\GameSceneUI\HitPointGaugeFrame</Filter>
+    </ClInclude>
+    <ClInclude Include="EventNotificator.h">
+      <Filter>ソース ファイル\EventNotificator</Filter>
+    </ClInclude>
+    <ClInclude Include="EventType.h">
+      <Filter>ソース ファイル\EventNotificator</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStateDamage.h">
+      <Filter>ソース ファイル\GameObject\PlayerObject\State\Damage</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStateDamage.h">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\Damage</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStateAttackFireBall.h">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStatePatrol.h">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\Patrol</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStateDetection.h">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\Detection</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStateStandUp.h">
+      <Filter>ソース ファイル\GameObject\PlayerObject\State\StandUp</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStateFlyingBack.h">
+      <Filter>ソース ファイル\GameObject\PlayerObject\State\FlyingBack</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStateWalk.h">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\Walk</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleSprite.h">
+      <Filter>ソース ファイル\UI\TitleSceneUI\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonSprite.h">
+      <Filter>ソース ファイル\UI\TitleSceneUI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="HitPointBackGround.h">
+      <Filter>ソース ファイル\UI\GameSceneUI\HitPointBackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBallObject.h">
+      <Filter>ソース ファイル\GameObject\FIreBall</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBreathObject.h">
+      <Filter>ソース ファイル\GameObject\FireBreath</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStatePreliminaryActionHand.h">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\PreliminaryAction</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStatePreliminaryActionBite.h">
+      <Filter>ソース ファイル\GameObject\EnemyObject\State\PreliminaryAction</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageNotificator.h">
+      <Filter>ソース ファイル\DamageNotificator</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageType.h">
+      <Filter>ソース ファイル\DamageNotificator</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStateRollForward.h">
+      <Filter>ソース ファイル\GameObject\PlayerObject\State\Roll</Filter>
+    </ClInclude>
+    <ClInclude Include="HitEffect.h">
+      <Filter>ソース ファイル\Effect\HitEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="FirstSlashEffect.h">
+      <Filter>ソース ファイル\Effect\Slash</Filter>
+    </ClInclude>
+    <ClInclude Include="GameClearSprite.h">
+      <Filter>ソース ファイル\UI\GameSceneUI\GameClear</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverSprite.h">
+      <Filter>ソース ファイル\UI\GameSceneUI\GameOver</Filter>
+    </ClInclude>
+    <ClInclude Include="CurtainSprite.h">
+      <Filter>ソース ファイル\UI\Curtain</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -710,6 +986,12 @@
       <Filter>Shader</Filter>
     </None>
     <None Include="Shaders\SkinnedG-Buffer.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\Emissive.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\Emissive.vert">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>

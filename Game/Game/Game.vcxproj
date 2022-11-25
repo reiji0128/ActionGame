@@ -138,7 +138,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\Libraries\Effekseer\Dev\Cpp\Effekseer\;$(SolutionDir)..\Libraries\Effekseer\Dev\Cpp\EffekseerRendererGL\;$(SolutionDir)..\Libraries\Effekseer\Dev\Cpp\Utils;$(SolutionDir)..\Libraries\Effekseer\build\ThirdParty\Install\zlib\include;$(SolutionDir)..\Libraries\Effekseer\build\ThirdParty\Install\libpng\include;$(SolutionDir)..\Libraries\Effekseer\build\ThirdParty\Install\libgd\include;$(SolutionDir)..\Libraries\Effekseer\build\ThirdParty\Install\glew\include;$(SolutionDir)..\Libraries\Effekseer\build\ThirdParty\Install\glfw\include;$(SolutionDir)..\Libraries\glew\include\;$(SolutionDir)..\Libraries\ImGUI\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\Libraries\Effekseer\Dev\Cpp\Effekseer\;$(SolutionDir)..\Libraries\Effekseer\Dev\Cpp\EffekseerRendererGL\;$(SolutionDir)..\Libraries\Effekseer\Dev\Cpp\Utils;$(SolutionDir)..\Libraries\Effekseer\build\ThirdParty\Install\zlib\include;$(SolutionDir)..\Libraries\Effekseer\build\ThirdParty\Install\libpng\include;$(SolutionDir)..\Libraries\Effekseer\build\ThirdParty\Install\libgd\include;$(SolutionDir)..\Libraries\Effekseer\build\ThirdParty\Install\glew\include;$(SolutionDir)..\Libraries\Effekseer\build\ThirdParty\Install\glfw\include;$(SolutionDir)..\Libraries\glew\include\;$(SolutionDir)..\Libraries\ImGUI\include\;$(SolutionDir)..\Libraries\SDL\include\;$(SolutionDir)..\Libraries\Effekseer\Downloads\OpenSoundMixer\src;$(SolutionDir)..\Libraries\rapidjson\include\;$(SolutionDir)..\Libraries\glew\src\;$(SolutionDir)..\Libraries\glad\include\</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -161,33 +161,59 @@
     <ClCompile Include="BitmapText.cpp" />
     <ClCompile Include="BoneTransform.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
+    <ClCompile Include="ButtonSprite.cpp" />
     <ClCompile Include="CameraObject.cpp" />
     <ClCompile Include="ColliderComponent.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="CubeMapComponent.cpp" />
+    <ClCompile Include="CurtainSprite.cpp" />
+    <ClCompile Include="DamageNotificator.cpp" />
     <ClCompile Include="DebugGrid.cpp" />
     <ClCompile Include="DepthMap.cpp" />
     <ClCompile Include="EnemyObject.cpp" />
     <ClCompile Include="EnemyStaeBase.cpp" />
-    <ClCompile Include="EnemyStateAttack.cpp" />
+    <ClCompile Include="EnemyStateAttackBite.cpp" />
+    <ClCompile Include="EnemyStateAttackFireBall.cpp" />
     <ClCompile Include="EnemyStateAttackHand.cpp" />
+    <ClCompile Include="EnemyStateDamage.cpp" />
     <ClCompile Include="EnemyStateDeath.cpp" />
+    <ClCompile Include="EnemyStateAttackFireBreath.cpp" />
+    <ClCompile Include="EnemyStateDetection.cpp" />
     <ClCompile Include="EnemyStateIdle.cpp" />
     <ClCompile Include="EffectComponent.cpp" />
     <ClCompile Include="EffekseerEffect.cpp" />
     <ClCompile Include="EnemyStatePatrol.cpp" />
+    <ClCompile Include="EnemyStatePreliminaryActionBite.cpp" />
+    <ClCompile Include="EnemyStatePreliminaryActionHand.cpp" />
     <ClCompile Include="EnemyStateRun.cpp" />
-    <ClCompile Include="EnemyStateThink.cpp" />
+    <ClCompile Include="EnemyStateWalk.cpp" />
+    <ClCompile Include="EventNotificator.cpp" />
+    <ClCompile Include="FireBallObject.cpp" />
+    <ClCompile Include="FireBreathObject.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameClearScene.cpp" />
+    <ClCompile Include="GameClearSprite.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameOverScene.cpp" />
+    <ClCompile Include="GameOverSprite.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="GameSceneUI.cpp" />
     <ClCompile Include="GBuffer.cpp" />
     <ClCompile Include="GraphicResourceManager.cpp" />
     <ClCompile Include="HDR.cpp" />
-    <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="HitEffect.cpp" />
+    <ClCompile Include="HitPointBackGround.cpp" />
+    <ClCompile Include="HitPointGaugeFrame.cpp" />
+    <ClCompile Include="PlayerStateDamage.cpp" />
+    <ClCompile Include="PlayerStateDeath.cpp" />
+    <ClCompile Include="PlayerStateFlyingBack.cpp" />
+    <ClCompile Include="PlayerStateRollForward.cpp" />
+    <ClCompile Include="PlayerStateStandUp.cpp" />
+    <ClCompile Include="PlayerStateSecondAttack.cpp" />
+    <ClCompile Include="PointLightComponent.cpp" />
+    <ClCompile Include="TitleSprite.cpp" />
+    <ClCompile Include="UIScreen.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InputController.cpp" />
     <ClCompile Include="LineCollider.cpp" />
@@ -197,7 +223,9 @@
     <ClCompile Include="MeshComponent.cpp" />
     <ClCompile Include="Music.cpp" />
     <ClCompile Include="PhysicsWorld.cpp" />
-    <ClCompile Include="PlayerHitPointBar.cpp" />
+    <ClCompile Include="HitPointGauge.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="PlayerObject.cpp" />
     <ClCompile Include="PlayerStateFirstAttack.cpp" />
     <ClCompile Include="PlayerStateIdle.cpp" />
@@ -230,33 +258,64 @@
     <ClInclude Include="BitmapText.h" />
     <ClInclude Include="BoneTransform.h" />
     <ClInclude Include="BoxCollider.h" />
+    <ClInclude Include="ButtonSprite.h" />
     <ClInclude Include="CameraObject.h" />
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="CubeMapComponent.h" />
+    <ClInclude Include="CurtainSprite.h" />
+    <ClInclude Include="DamageNotificator.h" />
+    <ClInclude Include="DamageType.h" />
     <ClInclude Include="DebugGrid.h" />
     <ClInclude Include="DepthMap.h" />
     <ClInclude Include="EnemyStaeBase.h" />
-    <ClInclude Include="EnemyStateAttack.h" />
+    <ClInclude Include="EnemyStateAttackBite.h" />
     <ClInclude Include="EnemyStateAttackHand.h" />
+    <ClInclude Include="EnemyStateDamage.h" />
     <ClInclude Include="EnemyStateDeath.h" />
+    <ClInclude Include="EnemyStateAttackFireBall.h" />
+    <ClInclude Include="EnemyStateAttackFireBreath.h" />
+    <ClInclude Include="EnemyStateDetection.h" />
     <ClInclude Include="EnemyStateIdle.h" />
     <ClInclude Include="EffectComponent.h" />
     <ClInclude Include="EffekseerEffect.h" />
     <ClInclude Include="EnemyObject.h" />
     <ClInclude Include="EnemyStatePatrol.h" />
+    <ClInclude Include="EnemyStatePreliminaryActionBite.h" />
+    <ClInclude Include="EnemyStatePreliminaryActionHand.h" />
     <ClInclude Include="EnemyStateRun.h" />
-    <ClInclude Include="EnemyStateThink.h" />
+    <ClInclude Include="EnemyStateWalk.h" />
+    <ClInclude Include="EventNotificator.h" />
+    <ClInclude Include="EventType.h" />
+    <ClInclude Include="FireBallObject.h" />
+    <ClInclude Include="FireBreathObject.h" />
+    <ClInclude Include="FirstSlashEffect.h" />
+    <ClInclude Include="GameClearSprite.h" />
+    <ClInclude Include="GameOverSprite.h" />
+    <ClInclude Include="HitEffect.h" />
+    <ClInclude Include="HitPointBackGround.h" />
+    <ClInclude Include="PlayerStateFlyingBack.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameClearScene.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameOverScene.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="GameSceneUI.h" />
     <ClInclude Include="GBuffer.h" />
     <ClInclude Include="GraphicResourceManager.h" />
     <ClInclude Include="HDR.h" />
-    <ClInclude Include="HUD.h" />
+    <ClInclude Include="HitPointGauge.h" />
+    <ClInclude Include="HitPointGaugeFrame.h" />
+    <ClInclude Include="IHitPointGetter.h" />
+    <ClInclude Include="PlayerStateDamage.h" />
+    <ClInclude Include="PlayerStateDeath.h" />
+    <ClInclude Include="PlayerStateRollForward.h" />
+    <ClInclude Include="PlayerStateStandUp.h" />
+    <ClInclude Include="PlayerStateSecondAttack.h" />
+    <ClInclude Include="PointLightComponent.h" />
+    <ClInclude Include="TitleSprite.h" />
+    <ClInclude Include="UIScreen.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputController.h" />
     <ClInclude Include="LineCollider.h" />
@@ -266,7 +325,6 @@
     <ClInclude Include="MeshComponent.h" />
     <ClInclude Include="Music.h" />
     <ClInclude Include="PhysicsWorld.h" />
-    <ClInclude Include="PlayerHitPointBar.h" />
     <ClInclude Include="PlayerObject.h" />
     <ClInclude Include="PlayerStateBase.h" />
     <ClInclude Include="PlayerStateFirstAttack.h" />
@@ -303,6 +361,8 @@
     <None Include="Shaders\DirectionalLight.frag" />
     <None Include="Shaders\DirectionalLight.vert" />
     <None Include="Shaders\DownSampling.frag" />
+    <None Include="Shaders\Emissive.frag" />
+    <None Include="Shaders\Emissive.vert" />
     <None Include="Shaders\GaussBlur.frag" />
     <None Include="Shaders\gBuffer.frag" />
     <None Include="Shaders\gBuffer.vert" />

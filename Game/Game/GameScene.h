@@ -3,11 +3,18 @@
 #include "SceneBase.h"
 #include "Renderer.h"
 
+//前方宣言
 class StageCreator;
 class BitmapText;
 class Texture;
 class DebugGrid;
-class PlayerHitPointBar;
+class PlayerObject;
+class EnemyObject;
+class GameSceneUI;
+class SwordObject;
+class ThirdPersonCameraObject;
+class EventNotificator;
+
 
 class GameScene : public SceneBase
 {
@@ -44,8 +51,6 @@ private:
 
 	float mLightDistance;
 
-	float mHealthScaleX;
-
 	// ビットマップテキストのポインタ
 	BitmapText* mFont;
 
@@ -55,9 +60,19 @@ private:
 	// デバッググリッドクラスのポインタ
 	DebugGrid* mGrid;
 
-	//class Texture* mUI;
-
+	// ステージ作成クラスのポインタ
 	StageCreator* mStageCreator;
 
-	PlayerHitPointBar* mPlayerHitPointBar;
+	// ゲームシーンUIクラスのポインタ
+	GameSceneUI* mGameSceneUI;
+
+	PlayerObject* mPlayer;
+
+	EnemyObject* mEnemy;
+
+	SwordObject* mSword;
+
+	ThirdPersonCameraObject* mCamera;
+
+	EventNotificator* mEvent;
 };

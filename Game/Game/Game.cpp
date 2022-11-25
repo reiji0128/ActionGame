@@ -74,8 +74,6 @@ void Game::Shutdown()
 {
 	RemoveAllGameObject();
 
-	GraphicResourceManager::Finalize();
-
 	if (mRenderer)
 	{
 		mRenderer->Shutdown();
@@ -109,9 +107,6 @@ bool Game::Initialize(int screenWidth, int screenHeight, bool fullScreen)
 		delete mRenderer;
 		return false;
 	}
-
-	// グラフィックリソースの初期化
-	GraphicResourceManager::Initialize();
 
 	// サウンドの初期化
 	if (!Mix_Init(MIX_INIT_MP3 | MIX_INIT_OGG))
@@ -362,7 +357,7 @@ void Game::Input()
 	INPUT_INSTANCE.Update();
 
 	// ESCが押されたら終了
-	if (INPUT_INSTANCE.IsKeyPullup(SDL_SCANCODE_ESCAPE))
+	if (INPUT_INSTANCE.IsKeyPullup(KEY_SELECT))
 	{
 		mIsRunning = false;
 	}

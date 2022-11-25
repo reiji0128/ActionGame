@@ -55,6 +55,9 @@ void main()
 	float l_distance = length(uLight.position - Position);
 	float attenuation = max(1.0f - l_distance / 100.0f, 0.0f);
 
+//	float attenuation= 1.0 / (uLight.constant + uLight.linear * l_distance +
+//                   uLight.quadratic * ( l_distance * l_distance ));
+
 	// ディフューズ
 	vec3  norm     = normalize(Normal);
 	vec3  lightDir = normalize(uLight.position - Position);
@@ -78,6 +81,7 @@ void main()
 	
 	// ピクセルの輝度を求める
 	float brightness = dot(result,vec3(0.2126, 0.7152, 0.0722));
+
 	if(brightness > 0.8)
 	{
 		BrightBuffer = vec4(result, 0.0f);
