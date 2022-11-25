@@ -30,6 +30,11 @@ public:
 	/// </summary>
 	void InputGBufferToShader();
 
+// ゲッター //
+	unsigned int GetGBufferID() const { return mGBuffer; }
+
+	int GetDepthTextureID() const { return mDepth; }
+
 private:
 	int mScreenWidth;
 
@@ -46,4 +51,7 @@ private:
 
 	// アルベドとスペキュラテクスチャのID
 	unsigned int mGAlbedoSpec;
+
+	// 深度テクスチャのID
+	unsigned int mDepth;
 };

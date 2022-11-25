@@ -20,6 +20,7 @@ void GBuffer::GBufferRenderingBegin()
 	glBindFramebuffer(GL_FRAMEBUFFER, mGBuffer);
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glDepthMask(GL_TRUE);
 }
 
 void GBuffer::GBufferRenderingEnd()
@@ -36,7 +37,7 @@ void GBuffer::CreateGBuffer()
 	glGenFramebuffers(1, &mGBuffer);
 	glBindFramebuffer(GL_FRAMEBUFFER, mGBuffer);
 	{
-		// 位置用カラーバッファ
+		// 位置用カラーバッファの作成
 		glGenTextures(1, &mGPosition);
 		glBindTexture(GL_TEXTURE_2D, mGPosition);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, mScreenWidth, mScreenHeight, 0, GL_RGBA, GL_FLOAT, NULL);
@@ -44,7 +45,7 @@ void GBuffer::CreateGBuffer()
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, mGPosition, 0);
 
-		// 法線用カラーバッファ
+		// 法線用カラーバッファの作成
 		glGenTextures(1, &mGNormal);
 		glBindTexture(GL_TEXTURE_2D, mGNormal);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, mScreenWidth, mScreenHeight, 0, GL_RGBA, GL_FLOAT, NULL);
@@ -52,7 +53,7 @@ void GBuffer::CreateGBuffer()
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, mGNormal, 0);
 
-		// アルベド(RGB) & スペキュラー(A)用カラーバッファ
+		// アルベド(RGB) & スペキュラー(A)用カラーバッファの作成
 		glGenTextures(1, &mGAlbedoSpec);
 		glBindTexture(GL_TEXTURE_2D, mGAlbedoSpec);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, mScreenWidth, mScreenHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
@@ -60,15 +61,26 @@ void GBuffer::CreateGBuffer()
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, mGAlbedoSpec, 0);
 
+		// 深度バッファの作成
+		glGenTextures(1, &mDepth);
+		glBindTexture(GL_TEXTURE_2D, mDepth);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, mScreenWidth, mScreenHeight, 0, GL_RGB, GL_FLOAT, NULL);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, GL_TEXTURE_2D, mDepth, 0);
+
 		// レンダリングに使用するカラーバッファのアタッチメント
-		unsigned int attachments[3] =
+		unsigned int attachments[4] =
 		{
 			GL_COLOR_ATTACHMENT0,
 			GL_COLOR_ATTACHMENT1,
 			GL_COLOR_ATTACHMENT2,
+			GL_COLOR_ATTACHMENT3
 		};
 
-		glDrawBuffers(3, attachments);
+		glDrawBuffers(4, attachments);
 
 		// レンダーバッファーの作成
 		glGenRenderbuffers(1, &gRenderBuffer);
