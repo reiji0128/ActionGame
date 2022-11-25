@@ -18,26 +18,25 @@ EffectComponent::EffectComponent(GameObject* owner, bool moveOn, bool rotateOn, 
 
 EffectComponent::~EffectComponent()
 {
-
 	RENDERER->GetEffekseerManager()->StopEffect(mHandle);
 }
 
 void EffectComponent::LoadEffect(const char16_t* effkseerFilename)
 {
-	EffekseerEffect* effect = GraphicResourceManager::GetEffect(effkseerFilename);
+	mEffect = GraphicResourceManager::GetEffect(effkseerFilename);
 
 	Vector3 pos = Vector3(0, 0, 0);
-	mHandle = effect->CreateInstanceHandle(pos);
+	mHandle = mEffect->CreateInstanceHandle(pos);
 }
 
 void EffectComponent::Update(float deltaTime)
 {
-	// エフェクトが現在も生きているか？
-	if (!(RENDERER->GetEffekseerManager()->Exists(mHandle)))
-	{
-		mOwner->SetState(GameObject::EDead);
-		return;
-	}
+	//// エフェクトが現在も生きているか？
+	//if (!(RENDERER->GetEffekseerManager()->Exists(mHandle)))
+	//{
+	//	mOwner->SetState(GameObject::EDead);
+	//	return;
+	//}
 
 	// エフェクトを移動させるか？
 	Matrix4 trans, rot;
@@ -74,4 +73,16 @@ void EffectComponent::Update(float deltaTime)
 	eMat = final;
 	RENDERER->GetEffekseerManager()->SetBaseMatrix(mHandle, eMat);
 
+}
+
+void EffectComponent::PlayEffect(const float& playRate)
+{
+	Vector3 pos = Vector3(0, 0, 0);
+	mHandle = mEffect->CreateInstanceHandle(pos);
+	RENDERER->GetEffekseerManager()->SetSpeed(mHandle, playRate);
+}
+
+void EffectComponent::StopEffect()
+{
+	RENDERER->GetEffekseerManager()->StopEffect(mHandle);
 }

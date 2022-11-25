@@ -6,6 +6,7 @@
 
 // 前方宣言
 class GameObject;
+class EffekseerEffect;
 
 class EffectComponent : public Component
 {
@@ -35,6 +36,17 @@ public:
 	/// </summary>
 	/// <param name="deltaTime"></param>
 	void Update(float deltaTime) override;
+
+	/// <summary>
+	/// エフェクトの再生
+	/// </summary>
+	/// <param name="playRate">再生速度</param>
+	void PlayEffect(const float& playRate = 1.0f);
+
+	/// <summary>
+	/// エフェクトの停止
+	/// </summary>
+	void StopEffect();
 
 // セッター //
 
@@ -83,4 +95,6 @@ private:
 
 	// 相対回転行列
 	Matrix4           mRelativeRot;
+
+	EffekseerEffect* mEffect;
 };
