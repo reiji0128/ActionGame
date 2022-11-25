@@ -3,8 +3,6 @@
 #include "Renderer.h"
 #include "Input.h"
 
-const float cameraLength = 1000.0f;
-const float cameraHight = 350.0f;
 const float rotateAngle = -Math::Pi;
 const float upAngle = Math::PiOver2 * 0.5f;
 const float rotateSpeed = 40.0f;
@@ -12,7 +10,7 @@ const float rotateSpeed = 40.0f;
 // 最大仰角
 const float maxLookDownAngle = Math::ToRadians(70.0f);
 // 最小仰角
-const float minLookDownAngle = Math::ToRadians(20.0f);
+const float minLookDownAngle = Math::ToRadians(00.0f);
 
 /// <summary>
 /// コンストラクタ
@@ -21,8 +19,8 @@ const float minLookDownAngle = Math::ToRadians(20.0f);
 ThirdPersonCameraObject::ThirdPersonCameraObject(GameObject* targetObject)
 	:CameraObject(targetObject)
 	,mCameraLength(0.0f)
-	,mRotateZAngle(0.0f)
-	,mLookDownAngle()
+	,mRotateZAngle(-Math::Pi)
+	,mLookDownAngle(Math::PiOver2 * 0.35f)
 {
 	mTargetDir = targetObject->GetDirection();
 }
@@ -56,7 +54,7 @@ void ThirdPersonCameraObject::UpdateGameObject(float deltaTime)
 	diff = dumper * deltaTime * diff;
 
 	// キー入力
-	const float rotate = 0.5f * deltaTime;
+	const float rotate = 0.6f * deltaTime;
 	if (INPUT_INSTANCE.IsKeyPressed(KEY_RIGHT))
 	{
 		mRotateZAngle += rotate;
@@ -91,7 +89,7 @@ void ThirdPersonCameraObject::UpdateGameObject(float deltaTime)
 
 	// ヨー回転・ピッチ回転
 	Vector3 rotatePos;
-	rotatePos.x = -mTargetDir.x * mCameraLength * cosf(mLookDownAngle) * cosf(mRotateZAngle);
+	rotatePos.x = mCameraLength * cosf(mLookDownAngle) * cosf(mRotateZAngle);
 	rotatePos.y = mCameraLength * cosf(mLookDownAngle) * sinf(mRotateZAngle);
 	rotatePos.z = mCameraLength * sinf(mLookDownAngle);
 
