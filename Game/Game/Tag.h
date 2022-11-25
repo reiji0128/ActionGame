@@ -11,8 +11,13 @@ enum class Tag : unsigned char
 	Begin,				// Tagの開始マーカー(Beginより手前に定義してはならない)
 
 	Player = Begin,
+	PlayerFirstAttack,
+	PlayerSecondAttack,
 	Enemy,
 	EnemyAttackHand,
+	EnemyAttackBite,
+	EnemyFireBreath,
+	EnemyFireBall,
 	BackGround,
 	Camera,
 	Effect,
