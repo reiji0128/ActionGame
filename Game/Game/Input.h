@@ -114,6 +114,8 @@ public:
 	/// <returns></returns>
 	bool IsRStickMove() { return mIsRStickMove; }
 
+	bool IsAnyButtonPushDown();
+
 private:
 	KEY_STATE_ENUM mKey[256];                      // 全キー状態取得用
 	char mKeyState[2][256];                        // キー状態 [現在/過去フレーム][全キーコード]

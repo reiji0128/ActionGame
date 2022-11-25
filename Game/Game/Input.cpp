@@ -20,16 +20,22 @@ Input::Input()
 		mKeyState[mPrevKey][i] = KEY_STATE_OFF;
 	}
 
-	// キーコンフィグ（本当は外部から読み込みたいところ）
-	mKeyConfig[BUTTON_A] = SDL_SCANCODE_SPACE;
-	mKeyConfig[BUTTON_B] = SDL_SCANCODE_F;
-	mKeyConfig[BUTTON_X] = SDL_SCANCODE_C;
-	mKeyConfig[BUTTON_Y] = SDL_SCANCODE_V;
-	mKeyConfig[KEY_L] = SDL_SCANCODE_Q;
-	mKeyConfig[KEY_R] = SDL_SCANCODE_E;
-	mKeyConfig[KEY_UP] = SDL_SCANCODE_UP;
-	mKeyConfig[KEY_DOWN] = SDL_SCANCODE_DOWN;
-	mKeyConfig[KEY_LEFT] = SDL_SCANCODE_LEFT;
+	// パッドのボタン割り当てを初期化
+	for (int i = 0; i < KEY_TYPE_ENUM_MAX; i++)
+	{
+		mPadConfig[i] = SDL_CONTROLLER_BUTTON_INVALID;
+	}
+
+	// キーコンフィグ
+	mKeyConfig[BUTTON_A]  = SDL_SCANCODE_SPACE;
+	mKeyConfig[BUTTON_B]  = SDL_SCANCODE_V;
+	mKeyConfig[BUTTON_X]  = SDL_SCANCODE_C;
+	mKeyConfig[BUTTON_Y]  = SDL_SCANCODE_F;
+	mKeyConfig[KEY_L]     = SDL_SCANCODE_Q;
+	mKeyConfig[KEY_R]     = SDL_SCANCODE_E;
+	mKeyConfig[KEY_UP]    = SDL_SCANCODE_UP;
+	mKeyConfig[KEY_DOWN]  = SDL_SCANCODE_DOWN;
+	mKeyConfig[KEY_LEFT]  = SDL_SCANCODE_LEFT;
 	mKeyConfig[KEY_RIGHT] = SDL_SCANCODE_RIGHT;
 
 	mKeyConfig[KEY_W] = SDL_SCANCODE_W;
@@ -39,8 +45,9 @@ Input::Input()
 	mKeyConfig[KEY_SPACE] = SDL_SCANCODE_SPACE;
 
 	mKeyConfig[KEY_START] = SDL_SCANCODE_RETURN;
-	mKeyConfig[KEY_SELECT] = SDL_SCANCODE_R;
+	mKeyConfig[KEY_SELECT] = SDL_SCANCODE_ESCAPE;
 
+	// パッドのボタン割り当て
 	mPadConfig[BUTTON_A] = SDL_CONTROLLER_BUTTON_A;
 	mPadConfig[BUTTON_B] = SDL_CONTROLLER_BUTTON_B;
 	mPadConfig[BUTTON_X] = SDL_CONTROLLER_BUTTON_X;
@@ -52,6 +59,7 @@ Input::Input()
 	mPadConfig[KEY_LEFT] = SDL_CONTROLLER_BUTTON_DPAD_LEFT;
 	mPadConfig[KEY_RIGHT] = SDL_CONTROLLER_BUTTON_DPAD_RIGHT;
 	mPadConfig[KEY_START] = SDL_CONTROLLER_BUTTON_START;
+	mPadConfig[KEY_SELECT] = SDL_CONTROLLER_BUTTON_BACK;
 }
 
 void Input::Update()
@@ -183,4 +191,17 @@ bool Input::ControllerInit()
 	// コントローラ初期化
 	mController = new InputController;
 	return mController->Initialize();
+}
+
+bool Input::IsAnyButtonPushDown()
+{
+	// パッドの状態を得る。キーボードが先に入力されていたら無視
+	for (unsigned int i = 0; i < KEY_TYPE_ENUM_MAX; i++)
+	{
+		if (mKeyConfigedKeyState[i] == KEY_STATE_PUSHDOWN)
+		{
+			return true;
+		}
+	}
+	return false;
 }
