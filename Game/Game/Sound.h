@@ -19,12 +19,12 @@ public:
 	/// <summary>
 	/// 再生
 	/// </summary>
-	void          Play();
+	void Play();
 
 	/// <summary>
 	/// 再生ストップ
 	/// </summary>
-	void          Stop();
+	void Stop();
 
 	/// <summary>
 	/// サウンドファイル読み込み
@@ -34,7 +34,7 @@ public:
 	/// true  : 読み込み成功
 	/// false : 読み込み失敗
 	/// </returns>
-	bool          LoadSound(const std::string& fileName);
+	bool LoadSound(const std::string& fileName);
 
 	/// <summary>
 	/// 現在再生中か？
@@ -43,12 +43,12 @@ public:
 	/// true  : 再生中
 	/// false : 再生していない
 	/// </returns>
-	bool          IsPlaying();
+	bool IsPlaying();
 
 private:
 	// サウンドデータ
 	Mix_Chunk* mChunk;
 
 	// 再生チャンネル
-	int        mChannel;
+	int mChannel;
 };
