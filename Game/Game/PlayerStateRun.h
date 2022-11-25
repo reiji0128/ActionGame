@@ -33,6 +33,12 @@ public:
 	void Enter(PlayerObject* owner, float deltaTime) override;
 
 private:
+
+	/// <summary>
+	/// “ü—Íˆ—
+	/// </summary>
+	void InputProcess() override;
+
 	/// <summary>
 	/// ˆÚ“®ˆ—
 	/// </summary>

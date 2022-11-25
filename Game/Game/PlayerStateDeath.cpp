@@ -15,7 +15,7 @@ PlayerState PlayerStateDeath::Update(PlayerObject* owner, float deltaTime)
 	if (!mSkelComp->IsPlaying())
 	{
 		// ƒvƒŒƒCƒ„[‚ðDeadó‘Ô‚É
-		owner->SetState(owner->EDead);
+		//owner->SetState(owner->EDead);
 	}
 
 	return PlayerState::STATE_DEATH;

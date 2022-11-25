@@ -13,4 +13,9 @@ public:
 	PlayerState Update(PlayerObject* owner, float deltaTime) override;
 
 	void Enter(PlayerObject* owner, float deltaTime) override;
+
+private:
+	void Attack(PlayerObject* owner, float deltaTime);
+
+	void InputProcess() override;
 };

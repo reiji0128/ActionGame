@@ -9,14 +9,21 @@
 #include "LineCollider.h"
 #include "Input.h"
 #include "ThirdPersonCameraObject.h"
+#include "DamageNotificator.h"
+#include "DamageType.h"
 
 #include "PlayerStateIdle.h"
 #include "PlayerStateRun.h"
+#include "PlayerStateRollForward.h"
 #include "PlayerStateFirstAttack.h"
 #include "PlayerStateSecondAttack.h"
+#include "PlayerStateStandUp.h"
+#include "PlayerStateFlyingBack.h"
+#include "PlayerStateDamage.h"
+#include "PlayerStateDeath.h"
 
 
-PlayerObject::PlayerObject(const Vector3& pos, const float& scale, const char* gpmeshFileName, const char* gpskelFileName)
+PlayerObject::PlayerObject(const Vector3& pos, const float& scale)
 	:GameObject(Tag::Player)
 	,mSkeltalMeshComp(nullptr)
 	,mBoxCollider(nullptr)
@@ -34,35 +41,47 @@ PlayerObject::PlayerObject(const Vector3& pos, const float& scale, const char* g
 
 	SetDirection(Vector3(1, 0, 0));
 
+	mVelocity = Vector3(0, 0, 0);
+
 	mHP = mMaxHP;
 
 	// メッシュの読み込み・セット
-	Mesh* mesh = GraphicResourceManager::LoadMesh(gpmeshFileName);
+	Mesh* mesh = GraphicResourceManager::LoadMesh("Assets/Player/Great_Sword_Idle.gpmesh");
 	mSkeltalMeshComp = new SkeletalMeshComponent(this,mShaderTag);
 	mSkeltalMeshComp->SetMesh(mesh);
 
 	// スケルトンの読み込み
-	mSkeltalMeshComp->SetSkeleton(GraphicResourceManager::LoadSkeleton(gpskelFileName));
+	mSkeltalMeshComp->SetSkeleton(GraphicResourceManager::LoadSkeleton("Assets/Player/Great_Sword_Idle.gpskel"));
 	// アニメーションの読み込み
 	mAnimations.resize(static_cast<unsigned int>(PlayerState::STATE_NUM));
-	mAnimations[static_cast<unsigned int>(PlayerState::STATE_IDLE)]          = GraphicResourceManager::LoadAnimation("Assets/Player/Great_Sword_Idle_Anim.gpanim"   , true);
-	mAnimations[static_cast<unsigned int>(PlayerState::STATE_RUN)]           = GraphicResourceManager::LoadAnimation("Assets/Player/A_SW_Run.gpanim"                , true);
-	mAnimations[static_cast<unsigned int>(PlayerState::STATE_FIRST_ATTACK)]  = GraphicResourceManager::LoadAnimation("Assets/Player/Great_Sword_FirstSlash.gpanim"  , false);
-	mAnimations[static_cast<unsigned int>(PlayerState::STATE_SECOND_ATTACK)] = GraphicResourceManager::LoadAnimation("Assets/Player/Great_Sword_SecondSlash.gpanim" , false);
-	mAnimations[static_cast<unsigned int>(PlayerState::STATE_DEATH)]         = GraphicResourceManager::LoadAnimation("Assets/Player/Two_Handed_Sword_Death.gpanim"  , false);
+	mAnimations[static_cast<unsigned int>(PlayerState::STATE_IDLE)]          = GraphicResourceManager::LoadAnimation("Assets/Player/Idle.gpanim"            , true);
+	mAnimations[static_cast<unsigned int>(PlayerState::STATE_RUN)]           = GraphicResourceManager::LoadAnimation("Assets/Player/Run.gpanim"             , true);
+	mAnimations[static_cast<unsigned int>(PlayerState::STATE_FIRST_ATTACK)]  = GraphicResourceManager::LoadAnimation("Assets/Player/FirstComboSlash.gpanim" , false);
+	mAnimations[static_cast<unsigned int>(PlayerState::STATE_SECOND_ATTACK)] = GraphicResourceManager::LoadAnimation("Assets/Player/ThirdComboSlash.gpanim" , false);
+	mAnimations[static_cast<unsigned int>(PlayerState::STATE_ROLL_FORWARD)]  = GraphicResourceManager::LoadAnimation("Assets/Player/Roll_Forward.gpanim", false);
+	mAnimations[static_cast<unsigned int>(PlayerState::STATE_STAND_UP)]      = GraphicResourceManager::LoadAnimation("Assets/Player/Stand_Up.gpanim"        , false);
+	mAnimations[static_cast<unsigned int>(PlayerState::STATE_DAMAGE)]        = GraphicResourceManager::LoadAnimation("Assets/Player/Damage.gpanim"          , false);
+	mAnimations[static_cast<unsigned int>(PlayerState::STATE_FLYING_BACK)]   = GraphicResourceManager::LoadAnimation("Assets/Player/Flying_Back.gpanim"     , false);
+	mAnimations[static_cast<unsigned int>(PlayerState::STATE_DEATH)]         = GraphicResourceManager::LoadAnimation("Assets/Player/Death.gpanim"           , false);
 	
 	// アイドル状態のアニメーションをセット
 	mSkeltalMeshComp->PlayAnimation(mAnimations[static_cast<unsigned int>(PlayerState::STATE_IDLE)]);
 	
 	// アクターステートプールの初期化
-	mStatePools.push_back(new PlayerStateIdle);
-	mStatePools.push_back(new PlayerStateRun);
-	mStatePools.push_back(new PlayerStateFirstAttack);
-	mStatePools.push_back(new PlayerStateSecondAttack);
+	mStatePools.push_back(mStateIdle         = new PlayerStateIdle);
+	mStatePools.push_back(mStateRun          = new PlayerStateRun);
+	mStatePools.push_back(mStateFirstAttack  = new PlayerStateFirstAttack);
+	mStatePools.push_back(mStateSecondAttack = new PlayerStateSecondAttack);
+	mStatePools.push_back(new PlayerStateRollForward);
+	mStatePools.push_back(mStateStandUp      = new PlayerStateStandUp);
+	mStatePools.push_back(mStateDamage       = new PlayerStateDamage);
+	mStatePools.push_back(mStateFlyingBack   = new PlayerStateFlyingBack);
+	mStatePools.push_back(mStateDeath        = new PlayerStateDeath);
 
 	// 当たり判定のセット
 	AABB box = mesh->GetCollisionBox();
-	box.Scaling(1.0f,1.0f,1.0f);
+	box.Scaling(0.5f,1.7f,1.0f);
+	box.mMin.z += 30;
 	mBoxCollider = new BoxCollider(this);
 	mBoxCollider->SetObjectBox(box);
 
@@ -70,6 +89,17 @@ PlayerObject::PlayerObject(const Vector3& pos, const float& scale, const char* g
 	mLineCollider = new LineCollider(this);
 	Line line(Vector3(0, 0, 50.0f), Vector3(0, 0, -20.0f));
 	mLineCollider->SetLine(line);
+
+
+	// 攻撃のダメージのセット
+	mAttackList[DamageType::PlayerFirstAttack] = 10;
+	mAttackList[DamageType::PlayerSecondAttack] = 20;
+
+	// ダメージ通知クラスに関数ポインタを追加
+	DamageNotificator::AddDamageFunction(DamageType::PlayerFirstAttack, std::bind(&PlayerObject::GetDamage, this, std::placeholders::_1));
+	DamageNotificator::AddDamageFunction(DamageType::PlayerSecondAttack, std::bind(&PlayerObject::GetDamage, this, std::placeholders::_1));
+
+	
 }
 
 /// <summary>
@@ -102,6 +132,8 @@ void PlayerObject::UpdateGameObject(float deltaTime)
 		mStatePools[static_cast<unsigned int>(mNextState)]->Enter(this, deltaTime);
 		mNowState = mNextState;
 	}
+
+	mPosition += mVelocity;
 }
 
 /// <summary>
@@ -168,9 +200,54 @@ void PlayerObject::OnCollisionEnter(ColliderComponent* ownCollider, ColliderComp
 			ComputeWorldTransform();
 		}
 	}
+
+
+	if (colliderTag == Tag::EnemyAttackBite)
+	{
+		mIsDamage = true;
+		mDamage = DamageNotificator::Norificate(DamageType::EnemyBiteAttack);
+	}
+
+	if (colliderTag == Tag::EnemyAttackHand)
+	{
+		mIsDamage = true;
+		mDamage = DamageNotificator::Norificate(DamageType::EnemyHandAttack);
+	}
+
+	if (colliderTag == Tag::EnemyFireBall)
+	{
+		mIsDamage = true;
+		mDamage = DamageNotificator::Norificate(DamageType::EnemyFireBall);
+	}
+
+	if (colliderTag == Tag::EnemyFireBreath)
+	{
+		mIsDamage = true;
+		mDamage = DamageNotificator::Norificate(DamageType::EnemyFireBreath);
+	}
 }
 
 void PlayerObject::Damage(int damage)
 {
 	mHP = mHP - damage;
+
+	if (mHP <= 0)
+	{
+		mHP = 0;
+	}
+
+	mIsDamage = false;
+}
+
+int PlayerObject::GetDamage(DamageType type) const
+{
+	// ダメージの種類を探す
+	auto iter = mAttackList.find(type);
+
+	// 見つかったら対応するダメージを返す
+	if (iter != mAttackList.end())
+	{
+		auto list = *iter;
+		return list.second;
+	}
 }

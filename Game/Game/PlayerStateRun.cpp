@@ -7,6 +7,7 @@
 PlayerStateRun::PlayerStateRun()
 	:mRotationTargetDir(0.0f,0.0f,0.0f)
 {
+	IsRollForward;
 }
 
 /// <summary>
@@ -24,24 +25,34 @@ PlayerStateRun::~PlayerStateRun()
 /// <returns></returns>
 PlayerState PlayerStateRun::Update(PlayerObject* owner, float deltaTime)
 {
-	// コントローラ入力されたか
-	Vector2 stickL = INPUT_INSTANCE.GetLStick();
-	bool isContollerInputOff = !INPUT_INSTANCE.IsLStickMove();
+	// 入力処理
+	InputProcess();
 
-	bool IsIdle = INPUT_INSTANCE.IsKeyOff(KEY_W) &
-		          INPUT_INSTANCE.IsKeyOff(KEY_S) &
-		          INPUT_INSTANCE.IsKeyOff(KEY_D) &
-		          INPUT_INSTANCE.IsKeyOff(KEY_A) &
-		          isContollerInputOff;
+	// 移動処理
+	MoveCalc(owner,deltaTime);
 
-	// 移動入力がなかったら
+	// 移動入力がなかったらアイドル状態に移行
 	if (IsIdle)
 	{
 		return PlayerState::STATE_IDLE;
 	}
 
-	// 移動処理
-	MoveCalc(owner,deltaTime);
+	if (IsAttack)
+	{
+		return PlayerState::STATE_FIRST_ATTACK;
+	}
+
+	if (IsRollForward)
+	{
+		IsRollForward = false;
+		return PlayerState::STATE_ROLL_FORWARD;
+	}
+
+	// ダメージを受けていたらダメージ受ける状態に移行
+	if (owner->GetIsDamage())
+	{
+		return PlayerState::STATE_FLYING_BACK;
+	}
 
 	return PlayerState::STATE_RUN;
 }
@@ -55,7 +66,29 @@ void PlayerStateRun::Enter(PlayerObject* owner, float deltaTime)
 {
     // アイドル状態のアニメーションを再生
     mSkelComp = owner->GetSkeltalMeshComp();
-    mSkelComp->PlayAnimation(owner->GetAnim(PlayerState::STATE_RUN));
+    mSkelComp->PlayAnimation(owner->GetAnim(PlayerState::STATE_RUN),0.6f);
+
+	IsRollForward = false;
+}
+
+void PlayerStateRun::InputProcess()
+{
+
+	// コントローラ左スティックが入力されたか
+	IsControllerInputOff = !INPUT_INSTANCE.IsLStickMove();
+
+	// 移動入力がされていないか
+	IsIdle = INPUT_INSTANCE.IsKeyOff(KEY_W) &
+		     INPUT_INSTANCE.IsKeyOff(KEY_S) &
+		     INPUT_INSTANCE.IsKeyOff(KEY_D) &
+		     INPUT_INSTANCE.IsKeyOff(KEY_A) &
+		     IsControllerInputOff;
+
+	// 攻撃入力がされたか
+	IsAttack = INPUT_INSTANCE.IsKeyPressed(BUTTON_B);
+
+	// 前転の入力があったか
+	IsRollForward = INPUT_INSTANCE.IsKeyPressed(BUTTON_A);
 }
 
 /// <summary>
@@ -70,7 +103,7 @@ void PlayerStateRun::MoveCalc(PlayerObject* owner, float deltaTime)
 	// 現在のプレイヤーのスピード
 	float charaSpeed = owner->GetSpeed();
 
-    // カメラから見た前方ベクトルを取得
+    // カメラからプレイヤーに向かうベクトルを算出
 	Vector3 playerPos = GAMEINSTANCE.GetViewTargetPos();
 	Vector3 cameraPos = GAMEINSTANCE.GetViewPos();
     Vector3 forwardVec = playerPos - cameraPos;
@@ -95,7 +128,7 @@ void PlayerStateRun::MoveCalc(PlayerObject* owner, float deltaTime)
 	// プレイヤーの前方ベクトル
 	mCharaForwardVec = owner->GetForward();
 
-    // キー入力
+// キーボード入力 //
     Vector3 DirVec(0.0f, 0.0f, 0.0f);
 	if (INPUT_INSTANCE.IsKeyPressed(KEY_W))
 	{
@@ -117,7 +150,7 @@ void PlayerStateRun::MoveCalc(PlayerObject* owner, float deltaTime)
 		DirVec -= rightVec;
 	}
 
-	// ゲームパッド
+// ゲームパッド入力 //
 	Vector2 stickL = INPUT_INSTANCE.GetLStick();
 	Matrix3 rot = Matrix3::CreateRotation(forwardAngle);
 	stickL = Vector2::Transform(stickL, rot);
@@ -132,6 +165,7 @@ void PlayerStateRun::MoveCalc(PlayerObject* owner, float deltaTime)
 	    // 回転中か？
 		if (mRotateNow)
 		{
+			// 回転処理
 			RotateActor();
 		}
 
@@ -151,12 +185,24 @@ void PlayerStateRun::MoveCalc(PlayerObject* owner, float deltaTime)
 	}
 
 	// 移動処理
-	playerPos += charaSpeed * DirVec;
+	DirVec.z = 0;
+	Vector3 velocity;
+	velocity += charaSpeed * DirVec;
+
+	// 最高速度を超えていたら調整
+	Vector3 horizonSpeed = velocity;
+	if (horizonSpeed.Length() > 200 * deltaTime)
+	{
+		horizonSpeed = DirVec * 200 * deltaTime;
+		velocity.x = horizonSpeed.x;
+		velocity.y = horizonSpeed.y;
+	}
 
 	// プレイヤーの位置・スピード・
 	// 前方ベクトル・変換行列の再計算の必要をセット
-	owner->SetPosition(playerPos);
+	//owner->SetPosition(playerPos);
 	owner->SetSpeed(charaSpeed);
+	owner->SetVelocity(velocity);
 	owner->SetDirection(mCharaForwardVec);
 	owner->SetComputeWorldTransform();
 }
@@ -176,7 +222,7 @@ void PlayerStateRun::RotateActor()
 	{
 		// 回転させる
 		Vector3 calcVec;
-		calcVec = zRotateToAimVec(mCharaForwardVec, mRotationTargetDir, 10.0f);
+		calcVec = zRotateToAimVec(mCharaForwardVec, mRotationTargetDir, 50.0f);
 
 		// 前方ベクトルが目標方向を超えていないか
 		Vector3 cross1, cross2;
