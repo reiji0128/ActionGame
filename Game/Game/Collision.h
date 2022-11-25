@@ -131,6 +131,12 @@ struct AABB
 	void Rotate(const Quaternion& q);
 
 	/// <summary>
+	/// オフセット
+	/// </summary>
+	/// <param name="offset">相対座標</param>
+	void Offset(const Vector3& offset);
+
+	/// <summary>
 	/// スケーリング
 	/// </summary>
 	/// <param name="x">Xの拡大率</param>

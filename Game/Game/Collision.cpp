@@ -203,6 +203,17 @@ void AABB::Rotate(const Quaternion& q)
     }
 }
 
+void AABB::Offset(const Vector3& offset)
+{
+    mMax.x += offset.x;
+    mMax.y += offset.y;
+    mMax.z += offset.z;
+
+    mMin.x += offset.x;
+    mMin.y += offset.y;
+    mMin.z += offset.z;
+}
+
 /// <summary>
 /// スケーリング
 /// </summary>
