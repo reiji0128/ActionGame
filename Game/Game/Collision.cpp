@@ -66,6 +66,11 @@ Line::Line(const Vector3& start, const Vector3& end)
     mNormalizeDirection = (1.0f / mLineLength) * diff;
 }
 
+Vector3 Line::PointOnSegment(float t) const
+{
+    return mLineStart + (mLineEnd - mLineStart) * t;
+}
+
 //------------------------------------------------//
 //   軸並行ボックス(Axis - Aligned Bounding Box)  //
 //------------------------------------------------//

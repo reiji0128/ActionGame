@@ -80,6 +80,17 @@ public:
 	/// </summary>
 	void ClearAllPair();
 
+	/// <summary>
+	/// 線分が衝突しているかどうか
+	/// </summary>
+	/// <param name="line">線分</param>
+	/// <param name="info">当たり判定情報</param>
+	/// <returns>
+	/// true  : 衝突している
+	/// false : 衝突していない
+	/// </returns>
+	bool SegmentCast(const struct Line& line, struct CollisionInfo& info);
+
 // セッター //
 
 	/// <summary>

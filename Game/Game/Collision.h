@@ -59,6 +59,13 @@ struct Line
 	/// <param name="end">終点座標</param>
 	Line(const Vector3& start,const Vector3& end);
 
+	/// <summary>
+	/// 0 <= t <= 1 となるセグメント上の点を取得
+	/// </summary>
+	/// <param name="t"></param>
+	/// <returns></returns>
+	Vector3 PointOnSegment(float t) const;
+
 	// 始点座標
 	Vector3 mLineStart;
 

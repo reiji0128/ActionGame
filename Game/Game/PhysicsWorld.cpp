@@ -178,6 +178,21 @@ void PhysicsWorld::ClearAllPair()
 	ClearSelfPair();
 }
 
+bool PhysicsWorld::SegmentCast(const Line& line, CollisionInfo& info)
+{
+	// 全てのボックスとテストをする
+	for (auto box : mColliders[Tag::BackGround])
+	{
+		float t;
+		// 線分はボックスと交わっているか
+		if (Intersect(line, dynamic_cast<BoxCollider*>(box)->GetWorldBox(),info))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 /// <summary>
 /// 当たり判定ペアのセット（片方だけリアクション返すタイプ）
 /// </summary>

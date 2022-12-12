@@ -1,7 +1,9 @@
 #include "ThirdPersonCameraObject.h"
 #include "Game.h"
+#include "PhysicsWorld.h"
 #include "Renderer.h"
 #include "Input.h"
+#include "Collision.h"
 
 const float rotateAngle = -Math::Pi;
 const float upAngle = Math::PiOver2 * 0.5f;
@@ -48,6 +50,7 @@ void ThirdPersonCameraObject::UpdateGameObject(float deltaTime)
 	const float dumper = 1.5f;
 	Vector3 diff;
 	Vector3 playerPos = mTargetActor->GetPosition();
+	playerPos.z += 100;
 
 	// 差分ベクトルからプレイヤー位置まで近づける
 	diff = playerPos - mViewTarget;
@@ -96,6 +99,16 @@ void ThirdPersonCameraObject::UpdateGameObject(float deltaTime)
 	// 注視点・カメラ位置をセット
 	mPosition = rotatePos + playerPos;
 	mViewTarget = playerPos;
+
+	PhysicsWorld* phys = GAMEINSTANCE.GetPhysics();
+	CollisionInfo info;
+
+	Line line(playerPos, mPosition);
+	
+	if (phys->SegmentCast(line, info))
+	{
+		mPosition = info.mCollisionPoint;
+	}
 
 	// カメラ行列作成
 	Matrix4 camMat = Matrix4::CreateLookAt(mPosition, mViewTarget, Vector3(0, 0, 1));
