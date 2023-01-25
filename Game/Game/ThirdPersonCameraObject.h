@@ -1,13 +1,16 @@
 #pragma once
 #include "CameraObject.h"
 
+class TargetSearch;
+
 class ThirdPersonCameraObject : public CameraObject
 {
 public:
+
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	ThirdPersonCameraObject(GameObject* targetObject);
+	ThirdPersonCameraObject(GameObject* targetObject, TargetSearch* targetSearch);
 
 	/// <summary>
 	/// デストラクタ
@@ -61,6 +64,9 @@ public:
 	Vector3& GetCameraPos() { return mCameraPos; }
 
 private:
+
+	void TargetLockOn();
+
 	// プレイヤーからの距離
 	float mCameraLength;
 
@@ -70,11 +76,25 @@ private:
 	// カメラ見下ろし方向回転角
 	float mLookDownAngle;
 
+	// めり込み防止の補正値
+	const float mCorrectionValue;
+
+	float mTime;
+
 	// 前方ベクトル
 	Vector3 mCameraForwardVec;
 
 	// カメラ位置
 	Vector3 mCameraPos;
 
-	Vector3 mTargetDir;
+	Vector3 mPlayerDir;
+
+	// ターゲットロックをしているか
+	bool mIsTargetLocke;
+
+	// 補間が終わったか
+	bool mIsFinishInterpolation;
+
+	// ターゲットを探すクラス
+	TargetSearch* mTargetSearch;
 };
